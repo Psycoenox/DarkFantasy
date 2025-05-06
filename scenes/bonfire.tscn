@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://batexh3xe3ytj"]
+
+[ext_resource type="Script" uid="uid://bv5owr5dfd24s" path="res://bonfire.gd" id="1_jev0p"]
+[ext_resource type="Texture2D" uid="uid://cp5axwgjxssvg" path="res://SpriteSheet/Bonfire/Bonfire_1.png" id="2_o0yqv"]
+[ext_resource type="Texture2D" uid="uid://b4h6eprgkcv3g" path="res://SpriteSheet/Bonfire/Bonfire_2.png" id="3_6t6eb"]
+[ext_resource type="Texture2D" uid="uid://dnw0cnxgc1ka0" path="res://SpriteSheet/Bonfire/Bonfire_3.png" id="4_2npm3"]
+[ext_resource type="Texture2D" uid="uid://blv6rq36v6y3j" path="res://SpriteSheet/Bonfire/Bonfire_4.png" id="5_3kp8y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibo1c"]
+atlas = ExtResource("2_o0yqv")
+region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asr7k"]
+atlas = ExtResource("3_6t6eb")
+region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2hny"]
+atlas = ExtResource("4_2npm3")
+region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qy3ud"]
+atlas = ExtResource("5_3kp8y")
+region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_movoj"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibo1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asr7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2hny")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qy3ud")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fykkw"]
+radius = 14.0357
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jev0p"]
+radius = 23.4094
+
+[node name="Bonfire" type="CharacterBody2D"]
+collision_layer = 16
+script = ExtResource("1_jev0p")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(32, 25)
+sprite_frames = SubResource("SpriteFrames_movoj")
+animation = &"idle"
+frame_progress = 0.96787
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 29)
+shape = SubResource("CircleShape2D_fykkw")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+position = Vector2(32, 29)
+shape = SubResource("CircleShape2D_jev0p")
+debug_color = Color(0.996078, 0, 0.223529, 0.0745098)
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

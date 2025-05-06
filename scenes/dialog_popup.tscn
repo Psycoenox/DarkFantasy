@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck4upt17m60tj"]
+
+[ext_resource type="Script" uid="uid://cf67rd862ol5d" path="res://dialog_popup.gd" id="1_irp3d"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_absye"]
+bg_color = Color(0, 0, 0, 0.380392)
+
+[node name="DialogPopup" type="CanvasLayer"]
+script = ExtResource("1_irp3d")
+
+[node name="Panel" type="Panel" parent="."]
+offset_left = 116.0
+offset_top = 560.0
+offset_right = 1059.0
+offset_bottom = 616.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_absye")
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = -3.0
+offset_right = 945.0
+offset_bottom = 56.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

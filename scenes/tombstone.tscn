@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcgb40psg51ir"]
+
+[ext_resource type="Script" uid="uid://bjv7usrenutla" path="res://tombstone.gd" id="1_mudpl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c0vnt"]
+size = Vector2(27.5, 17)
+
+[node name="Tombstone" type="Node2D"]
+script = ExtResource("1_mudpl")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_c0vnt")
+debug_color = Color(0.582075, 0.551164, 0, 0.42)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

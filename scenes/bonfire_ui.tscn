@@ -1,0 +1,87 @@
+[gd_scene load_steps=11 format=3 uid="uid://b4fuqqaj0a5gr"]
+
+[ext_resource type="Script" uid="uid://tawqncedsi61" path="res://scenes/bonfire_ui.gd" id="1_lmmno"]
+[ext_resource type="Texture2D" uid="uid://05bpm2vkpufa" path="res://SpriteSheet/Bonfire/tile000.png" id="2_rwmal"]
+[ext_resource type="Texture2D" uid="uid://dwt58bl7qpgmf" path="res://SpriteSheet/Bonfire/tile001.png" id="3_ewg4e"]
+[ext_resource type="Texture2D" uid="uid://cfyjh3lvkkin1" path="res://SpriteSheet/Bonfire/tile002.png" id="4_fo0nk"]
+[ext_resource type="Texture2D" uid="uid://34chay1ubg6q" path="res://SpriteSheet/Bonfire/tile003.png" id="5_ogqk1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qujoo"]
+atlas = ExtResource("2_rwmal")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ktij"]
+atlas = ExtResource("3_ewg4e")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c04p7"]
+atlas = ExtResource("4_fo0nk")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pooy"]
+atlas = ExtResource("5_ogqk1")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eo1tp"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qujoo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ktij")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c04p7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0pooy")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="BonfireUI" type="CanvasLayer"]
+script = ExtResource("1_lmmno")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(578, 324)
+scale = Vector2(2.875, 1.615)
+sprite_frames = SubResource("SpriteFrames_eo1tp")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.492886
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1150.0
+offset_bottom = 647.0
+color = Color(0, 0, 0, 0.458824)
+
+[node name="Descansar" type="Button" parent="."]
+offset_left = 21.0
+offset_top = 234.0
+offset_right = 110.0
+offset_bottom = 265.0
+text = "Descansar"
+
+[node name="Mejorar" type="Button" parent="."]
+offset_left = 13.0
+offset_top = 143.0
+offset_right = 102.0
+offset_bottom = 174.0
+text = "Mejorar"
+
+[node name="Salir" type="Button" parent="."]
+offset_left = 19.0
+offset_top = 61.0
+offset_right = 108.0
+offset_bottom = 92.0
+text = "SALIR"
+
+[connection signal="pressed" from="Salir" to="." method="_on_salir_pressed"]
