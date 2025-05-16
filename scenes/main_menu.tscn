@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://cdctq5m41q1fs"]
+
+[ext_resource type="Script" uid="uid://decgki4xba6jn" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://4s3jv4m2og1p" path="res://Backgrounds/MainMenu/30d3ce3e-b57d-48d3-9298-183e30ae0765.png" id="2_bqqt6"]
+[ext_resource type="FontFile" uid="uid://dg0r35sbao4qk" path="res://Backgrounds/Fonts/04B_30__.TTF" id="2_ekxnf"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu84c"]
+texture = ExtResource("2_bqqt6")
+modulate_color = Color(0.310617, 0.310617, 0.310617, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6cm7"]
+font = ExtResource("2_ekxnf")
+font_size = 113
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wu84c")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.255
+anchor_right = 0.5
+anchor_bottom = 0.255
+offset_left = -564.0
+offset_top = -52.24
+offset_right = 585.0
+offset_bottom = 121.76
+grow_horizontal = 2
+text = "Dark Fantasy"
+label_settings = SubResource("LabelSettings_l6cm7")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.503
+anchor_top = 0.783
+anchor_right = 0.503
+anchor_bottom = 0.783
+offset_left = -160.456
+offset_top = -112.384
+offset_right = 160.544
+offset_bottom = 112.616
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="Jugar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Jugar"
+
+[node name="Cargar" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Cargar Partida"
+
+[node name="Opciones" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Opciones"
+
+[node name="Salir" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Salir"

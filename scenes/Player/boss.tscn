@@ -762,7 +762,9 @@ script = ExtResource("1_m8j6r")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(32, 32)
 sprite_frames = SubResource("SpriteFrames_a8adf")
-animation = &"jump"
+animation = &"attack_2"
+frame = 24
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32, 29)

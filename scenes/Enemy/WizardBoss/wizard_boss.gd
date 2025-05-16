@@ -15,6 +15,7 @@ var is_attacking := false
 var has_fired := false  # Para evitar múltiples disparos por ataque
 var has_summoned := false
 var is_hurt := false
+var is_dead := false
 
 
 @onready var sprite := $AnimatedSprite2D
@@ -29,6 +30,8 @@ func _ready():
 	timer.start()
 
 func _physics_process(delta):
+	if is_dead:
+		return
 	if not player:
 		player = get_tree().get_root().get_node_or_null("Stage3/Player")
 
@@ -69,7 +72,7 @@ func _physics_process(delta):
 
 
 func _on_shoot_timer_timeout():
-	if not player or global_position.distance_to(player.global_position) > detection_range:
+	if is_dead or not player or global_position.distance_to(player.global_position) > detection_range:
 		return
 
 	is_attacking = true
@@ -77,8 +80,9 @@ func _on_shoot_timer_timeout():
 	sprite.play("attack")
 
 func _on_frame_changed():
+	if is_dead:
+		return
 	if sprite.animation == "attack" and sprite.frame == 9 and not has_fired:
-		# 🔄 Asegura que se gire correctamente en el momento del disparo
 		sprite.flip_h = player.global_position.x < global_position.x
 		shoot_point.position.x = -abs(shoot_point.position.x) if sprite.flip_h else abs(shoot_point.position.x)
 
@@ -101,6 +105,8 @@ func _fire_projectile():
 	print("🔫 Proyectil disparado")
 
 func take_damage(amount := 1):
+	if is_dead:
+		return
 	health -= amount
 	sprite.play("hit")
 
@@ -130,11 +136,19 @@ func summon_enemy():
 
 
 func die():
+	if is_dead:
+		return
+	is_dead = true
+	is_attacking = false
+	timer.stop()
+	$CollisionShape2D.disabled = true
 	sprite.play("death")
 	await sprite.animation_finished
 	queue_free()
-
 func _on_animated_sprite_2d_animation_finished():
+	if is_dead: 
+		return
+	
 	if sprite.animation == "attack":
 		is_attacking = false
 		sprite.play("idle")

@@ -1,5 +1,6 @@
+class_name Player
 extends CharacterBody2D
-
+signal takedamage
 @export var speed := 120
 @export var jump_force := -400
 @export var gravity := 1000
@@ -10,7 +11,9 @@ extends CharacterBody2D
 @export var combo_2_damage := 35
 @export var combo_3_damage := 50
 @export var special_damage := 75
-@export var health = 100
+@export var max_health := 100
+@export var health := max_health
+
 
 var is_attacking := false
 var is_blocking := false
@@ -152,6 +155,7 @@ func take_damage(amount := 1):
 
 	# Si no es invulnerable ni está bloqueando, recibe daño
 	health -= amount
+	takedamage.emit()
 	print("Player recibió " + str(amount) + " de Daño. Salud: " + str(health))
 
 	if health <= 0:

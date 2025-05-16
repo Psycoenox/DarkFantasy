@@ -597,11 +597,10 @@ script = ExtResource("1_jxe7t")
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(1152, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-position = Vector2(576, 207.5)
-scale = Vector2(0.75, 0.844727)
+position = Vector2(1179, 207.5)
+scale = Vector2(1.53516, 0.844727)
 texture = ExtResource("2_s602c")
 
 [node name="Player" parent="." instance=ExtResource("3_cwwb8")]

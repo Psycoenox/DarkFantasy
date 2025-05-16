@@ -1097,10 +1097,8 @@ limit_right = 2300
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player")]
-offset_left = 11.0
-offset_top = 14.0
-offset_right = 69.0
-offset_bottom = 41.0
+offset_right = 4.0
+offset_bottom = 27.0
 script = ExtResource("3_gqjuk")
 player = NodePath("../..")
 

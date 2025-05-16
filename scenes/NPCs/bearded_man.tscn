@@ -165,6 +165,7 @@ offset_bottom = -48.0
 region_rect = Rect2(0, 0, 220, 60)
 
 [node name="Label" type="Label" parent="NinePatchRect"]
+layout_mode = 0
 offset_left = 99.0
 offset_top = -5.0
 offset_right = 224.0
