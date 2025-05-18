@@ -1,13 +1,15 @@
-[gd_scene load_steps=53 format=3 uid="uid://bn5netgeci1m5"]
+[gd_scene load_steps=62 format=3 uid="uid://bn5netgeci1m5"]
 
 [ext_resource type="Script" uid="uid://dk1coki6385dt" path="res://scenes/Enemy/Wizard/wizard.gd" id="1_5d7o8"]
 [ext_resource type="Texture2D" uid="uid://clfl8leitxdm3" path="res://scenes/Enemy/Wizard/Attack1.png" id="1_d675x"]
 [ext_resource type="Texture2D" uid="uid://3vxxlxrn4cue" path="res://scenes/Enemy/Wizard/Attack2.png" id="2_5d7o8"]
+[ext_resource type="PackedScene" uid="uid://tcgon8y1cng5" path="res://scenes/Items/Coin/coin.tscn" id="2_61051"]
 [ext_resource type="Texture2D" uid="uid://cllr1r807k5xl" path="res://scenes/Enemy/Wizard/Fall.png" id="3_0n35t"]
 [ext_resource type="Texture2D" uid="uid://d0nmyndr157bs" path="res://scenes/Enemy/Wizard/Take hit.png" id="4_61051"]
 [ext_resource type="Texture2D" uid="uid://dytmx4340xv57" path="res://scenes/Enemy/Wizard/Idle.png" id="5_q1480"]
 [ext_resource type="Texture2D" uid="uid://d2eif4s67av6h" path="res://scenes/Enemy/Wizard/Jump.png" id="6_sa7j6"]
 [ext_resource type="Texture2D" uid="uid://7ae20tcv2yi7" path="res://scenes/Enemy/Wizard/Run.png" id="7_jyq1n"]
+[ext_resource type="Texture2D" uid="uid://5y8gledexomh" path="res://scenes/Enemy/Wizard/Death.png" id="8_0n35t"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dco10"]
 atlas = ExtResource("1_d675x")
@@ -72,6 +74,34 @@ region = Rect2(1500, 0, 250, 250)
 [sub_resource type="AtlasTexture" id="AtlasTexture_4rqis"]
 atlas = ExtResource("2_5d7o8")
 region = Rect2(1750, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61051"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(0, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1480"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(250, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sa7j6"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(500, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jyq1n"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(750, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3wmw"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(1000, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f503"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(1250, 0, 250, 250)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ag706"]
+atlas = ExtResource("8_0n35t")
+region = Rect2(1500, 0, 250, 250)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a654v"]
 atlas = ExtResource("3_0n35t")
@@ -192,7 +222,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tc7pm")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack_1",
 "speed": 9.0
 }, {
@@ -223,6 +253,32 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_2",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61051")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1480")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sa7j6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jyq1n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3wmw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8f503")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ag706")
+}],
+"loop": false,
+"name": &"death",
 "speed": 9.0
 }, {
 "frames": [],
@@ -320,7 +376,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4ueuu")
 }],
-"loop": false,
+"loop": true,
 "name": &"run",
 "speed": 9.0
 }]
@@ -341,13 +397,12 @@ radius = 124.101
 collision_layer = 8
 collision_mask = 3
 script = ExtResource("1_5d7o8")
+coin_scene = ExtResource("2_61051")
 
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(44, 22)
 sprite_frames = SubResource("SpriteFrames_y3wmw")
-animation = &"idle"
-frame = 7
-frame_progress = 1.0
+animation = &"death"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(42, 38)

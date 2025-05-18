@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends CharacterBody2D 
 
 @export var gravity := 1000
 @export var max_health := 100
@@ -127,38 +127,42 @@ func start_attack(target):
 
 
 func dash_towards_player():
-	# Al terminar el dash, mira hacia el jugador
-	if player_in_area:
-		var direction = (player_in_area.global_position - global_position).normalized()
-		sprite.flip_h = direction.x < 0	
 	if not player_in_area:
 		return
 
-	var direction = (player_in_area.global_position - global_position).normalized()
+	var direction: Vector2 = (player_in_area.global_position - global_position).normalized()
 	var dash_direction: int = sign(direction.x)
 	sprite.flip_h = dash_direction < 0
 
-	# 💥 Ignora al jugador durante el dash (pero no al suelo)
-	set_collision_mask(1)
+	# ⚠️ Ignora colisiones con el jugador (solo deja Ground por ejemplo)
+	set_collision_mask(1)  # Suponiendo que Ground está en la capa 1
 
 	var dash_time: float = 0.4
 	var elapsed: float = 0.0
+	var has_damaged: bool = false  # ✅ Para evitar múltiples daños durante el dash
 
 	while elapsed < dash_time:
 		velocity.x = dash_direction * dash_speed
 		move_and_slide()
-		await get_tree().process_frame
-		elapsed += get_process_delta_time()
 
+		# ✅ Daño si atraviesa al jugador
+		for body in attack_area.get_overlapping_bodies():
+			if body.name == "Player" and body.has_method("take_damage") and not has_damaged:
+				print("💥 Daño por dash!")
+				body.take_damage(attack_damage)
+				has_damaged = true
+
+		# Usa el Timer local (debes tener uno llamado DashWaitTimer)
+		$DashWaitTimer.start(0.01)
+		await $DashWaitTimer.timeout
+
+		elapsed += 0.01
+
+	# Detener movimiento tras el dash
 	velocity.x = 0
 
-	# ✅ Vuelve a detectar al jugador después del dash
-	set_collision_mask(1 | 2)
-
-
-
-
-
+	# ✅ Restaura colisiones normales (con el jugador)
+	set_collision_mask(1 | 2)  # Asegúrate de que Player esté en capa 2 si usas esto
 
 
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://bstec2h8bkd4h"]
 
-[ext_resource type="Script" uid="uid://blbrcu0mnbf1m" path="res://bearded_man.gd" id="1_76h8k"]
+[ext_resource type="Script" uid="uid://blbrcu0mnbf1m" path="res://scenes/NPCs/bearded_man.gd" id="1_76h8k"]
 [ext_resource type="Texture2D" uid="uid://bv3jyfwuh0rvc" path="res://scenes/NPCs/bearded-idle.png" id="2_xt067"]
 [ext_resource type="Texture2D" uid="uid://d0w3fnl5c5bqa" path="res://scenes/NPCs/bearded-walk.png" id="3_63sq3"]
 [ext_resource type="Texture2D" uid="uid://buqhkke0m57ya" path="res://scenes/NPCs/Keys/E-Key.png" id="4_xt067"]
@@ -155,25 +155,7 @@ position = Vector2(-9.53674e-07, -45)
 scale = Vector2(0.668091, 0.544067)
 sprite_frames = SubResource("SpriteFrames_dpyyi")
 animation = &"e"
-frame_progress = 0.703305
-
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-offset_left = -83.0
-offset_top = -88.0
-offset_right = 88.0
-offset_bottom = -48.0
-region_rect = Rect2(0, 0, 220, 60)
-
-[node name="Label" type="Label" parent="NinePatchRect"]
-layout_mode = 0
-offset_left = 99.0
-offset_top = -5.0
-offset_right = 224.0
-offset_bottom = 40.0
-theme_override_font_sizes/font_size = 11
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 3
+frame_progress = 0.313715
 
 [connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

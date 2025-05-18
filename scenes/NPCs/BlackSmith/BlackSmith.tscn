@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3 uid="uid://c5v2sfgi0vfv4"]
+
+[ext_resource type="Script" uid="uid://cy2o46lx2x8ol" path="res://scenes/NPCs/BlackSmith/black_smith.gd" id="1_xu88g"]
+[ext_resource type="Texture2D" uid="uid://dkschvcjx71r2" path="res://scenes/NPCs/BlackSmith/BLACKSMITH.png" id="2_ts32n"]
+[ext_resource type="Texture2D" uid="uid://bakg0d38jq1xg" path="res://scenes/NPCs/e-Photoroom.png" id="3_ts32n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14f8b"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ifva"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psy0n"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ecmn"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v673p"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(384, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_omi7l"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(480, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8iqo"]
+atlas = ExtResource("2_ts32n")
+region = Rect2(576, 0, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_501jd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_14f8b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ifva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psy0n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ecmn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v673p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_omi7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8iqo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 9.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l3uo0"]
+radius = 19.0
+height = 52.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fntsf"]
+radius = 46.6905
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0avh"]
+atlas = ExtResource("3_ts32n")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_26gvp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0avh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 3
+script = ExtResource("1_xu88g")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_501jd")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 4)
+shape = SubResource("CapsuleShape2D_l3uo0")
+debug_color = Color(0.559001, 0.560408, 0, 0.42)
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 3
+
+[node name="DetectCollision" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_fntsf")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(34, -59)
+scale = Vector2(0.038086, 0.0312501)
+sprite_frames = SubResource("SpriteFrames_26gvp")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

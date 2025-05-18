@@ -1,17 +1,21 @@
 extends CanvasLayer
 
-var pending_text := ""
-
 @onready var label = $Panel/Label
 
-func _ready():
-	if label and pending_text != "":
-		label.text = pending_text
+var messages: Array = []
+var index: int = 0
 
-	await get_tree().create_timer(3.0).timeout
-	queue_free()
+func set_text_array(new_messages: Array) -> void:
+	messages = new_messages
+	index = 0
+	_show_current()
 
-func set_text(new_text: String) -> void:
-	pending_text = new_text
-	if label:
-		label.text = new_text
+func advance_text():
+	index += 1
+	_show_current()
+
+func _show_current():
+	if index < messages.size():
+		label.text = messages[index]
+	else:
+		queue_free()

@@ -66,6 +66,8 @@ interact={
 2d_physics/layer_4="Enemies"
 2d_physics/layer_5="Items"
 2d_physics/layer_6="Npcs"
+2d_physics/layer_7="PlayerAttack"
+2d_physics/layer_8="Traps"
 
 [rendering]
 

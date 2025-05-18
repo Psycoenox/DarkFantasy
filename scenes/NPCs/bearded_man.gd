@@ -10,40 +10,33 @@ extends CharacterBody2D
 
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var area := $DetectArea
-@onready var label := $NinePatchRect/Label
 @onready var interaction_icon := $Sprite2D
-@onready var dialogue_box := $NinePatchRect
+@onready var dialog_scene = preload("res://scenes/dialog_popup.tscn")  # Ajusta si está en otra ruta
 
-var current_line := 0
-var dialogue_active := false
 var player_in_range := false
+var dialogue_active := false
 
 func _ready() -> void:
-	dialogue_box.visible = false
 	interaction_icon.visible = false
 	area.connect("body_entered", _on_detect_area_body_entered)
 	area.connect("body_exited", _on_detect_area_body_exited)
 	animated_sprite.play("idle")
 
-func _process(delta):
-	if player_in_range:
-		interaction_icon.visible = true
-	else:
-		interaction_icon.visible = false
+func _process(_delta):
+	interaction_icon.visible = player_in_range
 
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		if not dialogue_active:
+			var popup = dialog_scene.instantiate()
+			get_tree().get_root().add_child(popup)
 			dialogue_active = true
-			dialogue_box.visible = true
-			label.text = dialogue_lines[current_line]
+			popup.set_text_array(dialogue_lines)
+			popup.connect("tree_exited", Callable(self, "_on_dialogue_finished"))
 		else:
-			current_line += 1
-			if current_line < dialogue_lines.size():
-				label.text = dialogue_lines[current_line]
-			else:
-				dialogue_box.visible = false
-				dialogue_active = false
-				current_line = 0
+			var popup = get_tree().get_root().get_node_or_null("DialogPopup")
+			if popup:
+				popup.advance_text()
+
 
 func _on_detect_area_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
@@ -52,4 +45,6 @@ func _on_detect_area_body_entered(body: Node2D) -> void:
 func _on_detect_area_body_exited(body: Node2D) -> void:
 	if body.name == "Player":
 		player_in_range = false
-		dialogue_box.visible = false
+
+func _on_dialogue_finished():
+	dialogue_active = false

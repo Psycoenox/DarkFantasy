@@ -745,11 +745,11 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m8j6r"]
 radius = 15.0
-height = 44.0
+height = 52.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lh25h"]
-radius = 18.0
-height = 50.0
+radius = 21.0
+height = 58.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_m8j6r"]
 radius = 33.0151
@@ -760,20 +760,19 @@ collision_mask = 3
 script = ExtResource("1_m8j6r")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(32, 32)
+position = Vector2(32, 29)
+scale = Vector2(1.17188, 1.5)
 sprite_frames = SubResource("SpriteFrames_a8adf")
-animation = &"attack_2"
-frame = 24
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(32, 29)
+position = Vector2(33, 27)
 shape = SubResource("CapsuleShape2D_m8j6r")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(32, 29)
+position = Vector2(33, 27)
 shape = SubResource("CapsuleShape2D_lh25h")
 debug_color = Color(0.992157, 0, 0.239216, 0.12549)
 
@@ -781,6 +780,9 @@ debug_color = Color(0.992157, 0, 0.239216, 0.12549)
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(32, 29)
+position = Vector2(33, 27)
 shape = SubResource("CircleShape2D_m8j6r")
 debug_color = Color(0.614875, 0.536856, 1.92523e-07, 0.42)
+
+[node name="DashWaitTimer" type="Timer" parent="."]
+one_shot = true

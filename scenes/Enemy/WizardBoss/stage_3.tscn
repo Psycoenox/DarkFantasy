@@ -1,12 +1,15 @@
-[gd_scene load_steps=16 format=3 uid="uid://da545b8573rqk"]
+[gd_scene load_steps=19 format=3 uid="uid://da545b8573rqk"]
 
 [ext_resource type="Script" uid="uid://2ydp0fchp23j" path="res://stage_3.gd" id="1_jxe7t"]
 [ext_resource type="Texture2D" uid="uid://cpplrr8dgeatt" path="res://Backgrounds/Backgrounds03Stage/back.png" id="2_s602c"]
 [ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="3_cwwb8"]
+[ext_resource type="PackedScene" uid="uid://bsc8q1mo4omon" path="res://Backgrounds/Backgrounds02Stage/Ilumination/torch.tscn" id="3_xgaru"]
 [ext_resource type="Texture2D" uid="uid://bjjgclety034c" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/OldDarkCastle/tileset_resized_proportional.png" id="4_xgaru"]
 [ext_resource type="Texture2D" uid="uid://bgwgqbme1d5js" path="res://Backgrounds/Backgrounds03Stage/doorclose-removebg-preview.png" id="5_3mian"]
 [ext_resource type="Texture2D" uid="uid://dmyc6funegcap" path="res://Backgrounds/Backgrounds03Stage/dooropen.png" id="6_gti67"]
 [ext_resource type="PackedScene" uid="uid://ddqffb2uipxda" path="res://scenes/Enemy/WizardBoss/WizardBoss.tscn" id="7_katme"]
+[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="8_s602c"]
+[ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="9_cwwb8"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tvv21"]
 
@@ -594,6 +597,10 @@ animations = [{
 [node name="Stage3" type="Node2D"]
 script = ExtResource("1_jxe7t")
 
+[node name="Torch" parent="." instance=ExtResource("3_xgaru")]
+position = Vector2(419, 428)
+scale = Vector2(1.53516, 0.844727)
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -645,10 +652,19 @@ shape = SubResource("CircleShape2D_dsw6v")
 position = Vector2(2142, 336)
 scale = Vector2(0.291, 0.273)
 sprite_frames = SubResource("SpriteFrames_4cvag")
-animation = &"closed"
+animation = &"open"
 
 [node name="WizardBoss" parent="." instance=ExtResource("7_katme")]
-position = Vector2(1371, 494)
+position = Vector2(1320, 494)
+
+[node name="Worm" parent="." instance=ExtResource("8_s602c")]
+position = Vector2(449, 521)
+
+[node name="WizardBoss2" parent="." instance=ExtResource("7_katme")]
+position = Vector2(-551, 1233)
+
+[node name="Wizard" parent="." instance=ExtResource("9_cwwb8")]
+position = Vector2(671, 134)
 
 [connection signal="body_entered" from="key" to="." method="_on_key_body_entered"]
 [connection signal="body_entered" from="door" to="." method="_on_door_body_entered"]
