@@ -48,3 +48,7 @@ func _on_detect_area_body_exited(body: Node2D) -> void:
 
 func _on_dialogue_finished():
 	dialogue_active = false
+
+	var stage = get_tree().get_root().get_node_or_null("Stage1")
+	if stage and stage.has_method("registrar_npc_hablado"):
+		stage.registrar_npc_hablado()

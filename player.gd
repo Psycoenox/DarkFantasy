@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 signal takedamage
+signal stats_updated # señal para daño o vida
 
 @export var speed := 120
 @export var jump_force := -400
@@ -17,7 +18,7 @@ signal takedamage
 @export var health := max_health
 
 var is_attacking := false
-var coins := 0
+var coins := 999
 var is_blocking := false
 var is_special_attacking := false
 var is_rolling := false
@@ -40,7 +41,7 @@ var attack_damages = {
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
 @onready var invuln_timer: Timer = $InvulnTimer
-
+@onready var world_map_scene := preload("res://scenes/Items/Maps/world_map.tscn")
 func _ready():
 	add_to_group("player")
 
@@ -105,6 +106,14 @@ func _physics_process(delta):
 	# ✨ ESPECIAL
 	if Input.is_action_just_pressed("special") and not is_attacking and not is_special_attacking and not is_rolling and not is_blocking:
 		start_special_attack()
+
+	if Input.is_action_just_pressed("open_map"):
+		if not get_tree().get_root().has_node("WorldMap"):
+			var map = world_map_scene.instantiate()
+			map.name = "WorldMap"
+			get_tree().get_root().add_child(map)
+			map.connect("mapa_cerrado", Callable(self, "_on_mapa_cerrado"))
+			set_can_move(false)
 
 	# 🪂 Clamped velocidad vertical
 	velocity.y = clamp(velocity.y, -9999, max_fall_speed)
@@ -195,9 +204,27 @@ func take_damage(amount := 1):
 	if health <= 0:
 		die()
 		
+func _notification(what):
+	if what == NOTIFICATION_EXIT_TREE and not get_tree().get_root().has_node("WorldMap"):
+		set_can_move(true)
+
+func _on_mapa_cerrado():
+	set_can_move(true)
+
 func collect_coin(amount:int) -> void:
 	coins += amount
 	print("Total de monedas: ", coins)
+	
+func upgrade_health(amount: int):
+	max_health += amount
+	health = max_health
+	takedamage.emit()  # 🔄 Forzar actualización de barra de vida
+
+func heal(amount: int):
+	health += amount
+	health = min(health, max_health)
+	emit_signal("takedamage")  # Esto actualiza la barra de vida si usas esa señal
+
 
 func die():
 	print("Jugador ha muerto")

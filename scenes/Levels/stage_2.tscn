@@ -1,23 +1,23 @@
 [gd_scene load_steps=21 format=3 uid="uid://bou33kce8bpy4"]
 
-[ext_resource type="Texture2D" uid="uid://bwcoh7tqevbwh" path="res://Backgrounds/Backgrounds02Stage/Background/Cemetery/background.png" id="1_4mr3r"]
-[ext_resource type="Texture2D" uid="uid://bt0p3l0ncxmcd" path="res://Backgrounds/Backgrounds02Stage/Background/Cemetery/mountains.png" id="2_3fpmn"]
-[ext_resource type="Texture2D" uid="uid://daswnvwlbf5gb" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/objects.png" id="2_eo3yx"]
-[ext_resource type="Texture2D" uid="uid://kc8m453u80j1" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/tileset.png" id="3_3fpmn"]
-[ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="3_h31wl"]
-[ext_resource type="Texture2D" uid="uid://clcf2iyisb7jr" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/tileset_resized_50_from_chatgpt.png" id="5_h31wl"]
-[ext_resource type="Texture2D" uid="uid://27ds7yupr1p1" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/Tilesetv3.png" id="7_7cfnq"]
-[ext_resource type="PackedScene" uid="uid://bcgb40psg51ir" path="res://scenes/tombstone.tscn" id="8_4tdm4"]
-[ext_resource type="PackedScene" uid="uid://bsc8q1mo4omon" path="res://Backgrounds/Backgrounds02Stage/Ilumination/torch.tscn" id="8_dxxu8"]
-[ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="9_4tdm4"]
-[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="10_rtm8h"]
-[ext_resource type="PackedScene" uid="uid://dq4wxpo2kqvgn" path="res://scenes/Player/boss.tscn" id="10_swvl5"]
-[ext_resource type="PackedScene" uid="uid://ch8q4bu0hxubp" path="res://scenes/Enemy/spike_trap.tscn" id="12_uifyc"]
-[ext_resource type="Texture2D" uid="uid://cejvlk1oewql5" path="res://Backgrounds/Backgrounds02Stage/Background/kanu-removebg-preview.png" id="14_13qa6"]
-[ext_resource type="Texture2D" uid="uid://qrbno1vavyvr" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/ae8017c6-a36e-4b15-86fb-6f0aa5da9bb6.png" id="15_je5r7"]
+[ext_resource type="PackedScene" uid="uid://bcgb40psg51ir" path="res://scenes/tombstone.tscn" id="1_koi0e"]
+[ext_resource type="PackedScene" uid="uid://bsc8q1mo4omon" path="res://Backgrounds/Backgrounds02Stage/Ilumination/torch.tscn" id="2_l3ew6"]
+[ext_resource type="Texture2D" uid="uid://bwcoh7tqevbwh" path="res://Backgrounds/Backgrounds02Stage/Background/Cemetery/background.png" id="3_0gs5p"]
+[ext_resource type="Texture2D" uid="uid://bt0p3l0ncxmcd" path="res://Backgrounds/Backgrounds02Stage/Background/Cemetery/mountains.png" id="4_sowao"]
+[ext_resource type="Texture2D" uid="uid://daswnvwlbf5gb" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/objects.png" id="5_yf7od"]
+[ext_resource type="Texture2D" uid="uid://kc8m453u80j1" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/tileset.png" id="6_ouq7j"]
+[ext_resource type="Texture2D" uid="uid://27ds7yupr1p1" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/Tilesetv3.png" id="7_fun6o"]
+[ext_resource type="Texture2D" uid="uid://clcf2iyisb7jr" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/Cemetery/tileset_resized_50_from_chatgpt.png" id="8_hnakc"]
+[ext_resource type="Texture2D" uid="uid://cejvlk1oewql5" path="res://Backgrounds/Backgrounds02Stage/Background/kanu-removebg-preview.png" id="9_02ks5"]
+[ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="10_o0dsl"]
+[ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="11_gae7b"]
+[ext_resource type="PackedScene" uid="uid://dq4wxpo2kqvgn" path="res://scenes/Player/boss.tscn" id="12_uvqyt"]
+[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="13_t4yto"]
+[ext_resource type="PackedScene" uid="uid://ch8q4bu0hxubp" path="res://scenes/Enemy/spike_trap.tscn" id="14_lqcwt"]
+[ext_resource type="Texture2D" uid="uid://qrbno1vavyvr" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/ae8017c6-a36e-4b15-86fb-6f0aa5da9bb6.png" id="15_1r1vw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31wl"]
-texture = ExtResource("2_eo3yx")
+texture = ExtResource("5_yf7od")
 53:1/0 = 0
 56:1/0 = 0
 57:1/0 = 0
@@ -267,7 +267,7 @@ texture = ExtResource("2_eo3yx")
 55:11/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmavw"]
-texture = ExtResource("3_3fpmn")
+texture = ExtResource("6_ouq7j")
 21:1/0 = 0
 21:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
 22:1/0 = 0
@@ -438,7 +438,7 @@ texture = ExtResource("3_3fpmn")
 13:4/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13qa6"]
-texture = ExtResource("7_7cfnq")
+texture = ExtResource("7_fun6o")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -1139,7 +1139,7 @@ texture = ExtResource("7_7cfnq")
 13:51/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dxxu8"]
-texture = ExtResource("5_h31wl")
+texture = ExtResource("8_hnakc")
 20:5/0 = 0
 21:5/0 = 0
 22:5/0 = 0
@@ -1672,30 +1672,30 @@ sources/2 = SubResource("TileSetAtlasSource_13qa6")
 
 [node name="stage_2" type="Node2D"]
 
-[node name="Tombstone" parent="." instance=ExtResource("8_4tdm4")]
+[node name="Tombstone" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(110, 489)
 messages = ["Una tumba sin nombre...", "Tal vez de un héroe olvidado.", "Que podria ser?"]
 
-[node name="Tombstone2" parent="." instance=ExtResource("8_4tdm4")]
+[node name="Tombstone2" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(155, 488)
 
-[node name="Tombstone3" parent="." instance=ExtResource("8_4tdm4")]
+[node name="Tombstone3" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(205, 489)
 
-[node name="Tombstone4" parent="." instance=ExtResource("8_4tdm4")]
+[node name="Tombstone4" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(249, 489)
 
-[node name="Cartel" parent="." instance=ExtResource("8_4tdm4")]
+[node name="Cartel" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(1346, 920)
 messages = ["Vaya...", "Conque aqui acabaste"]
 
-[node name="Torch" parent="." instance=ExtResource("8_dxxu8")]
+[node name="Torch" parent="." instance=ExtResource("2_l3ew6")]
 position = Vector2(288, 358)
 
-[node name="Torch2" parent="." instance=ExtResource("8_dxxu8")]
+[node name="Torch2" parent="." instance=ExtResource("2_l3ew6")]
 position = Vector2(1277, 391)
 
-[node name="Torch3" parent="." instance=ExtResource("8_dxxu8")]
+[node name="Torch3" parent="." instance=ExtResource("2_l3ew6")]
 position = Vector2(525, 434)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
@@ -1706,7 +1706,7 @@ motion_mirroring = Vector2(1152, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(577, 320)
 scale = Vector2(3.00521, 2.88393)
-texture = ExtResource("1_4mr3r")
+texture = ExtResource("3_0gs5p")
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(1152, 0)
@@ -1714,7 +1714,7 @@ motion_mirroring = Vector2(1152, 0)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(577, 399)
 scale = Vector2(6, 2.53073)
-texture = ExtResource("2_3fpmn")
+texture = ExtResource("4_sowao")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(576, 420.5)
@@ -1734,39 +1734,39 @@ layer_2/tile_data = PackedInt32Array(1704029, 3276800, 6, 1704030, 3342336, 6, 1
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1288, 921)
 scale = Vector2(0.0926199, 0.076925)
-texture = ExtResource("14_13qa6")
+texture = ExtResource("9_02ks5")
 
-[node name="Player" parent="." instance=ExtResource("3_h31wl")]
+[node name="Player" parent="." instance=ExtResource("10_o0dsl")]
 position = Vector2(30, 389)
 
-[node name="Wizard2" parent="." instance=ExtResource("9_4tdm4")]
+[node name="Wizard2" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1569, 879)
 
-[node name="Wizard" parent="." instance=ExtResource("9_4tdm4")]
+[node name="Wizard" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1527, 430)
 
-[node name="Boss3" parent="." instance=ExtResource("10_swvl5")]
+[node name="Boss3" parent="." instance=ExtResource("12_uvqyt")]
 position = Vector2(1858, 449)
 
-[node name="Bringer" parent="." instance=ExtResource("10_rtm8h")]
+[node name="Bringer" parent="." instance=ExtResource("13_t4yto")]
 position = Vector2(2062, 477)
 
-[node name="SpikeTrap" parent="." instance=ExtResource("12_uifyc")]
+[node name="SpikeTrap" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(571, 516)
 
-[node name="SpikeTrap2" parent="." instance=ExtResource("12_uifyc")]
+[node name="SpikeTrap2" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(591, 516)
 
-[node name="SpikeTrap3" parent="." instance=ExtResource("12_uifyc")]
+[node name="SpikeTrap3" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(611, 516)
 
-[node name="SpikeTrap4" parent="." instance=ExtResource("12_uifyc")]
+[node name="SpikeTrap4" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(631, 516)
 
-[node name="SpikeTrap5" parent="." instance=ExtResource("12_uifyc")]
+[node name="SpikeTrap5" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(645, 516)
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 position = Vector2(1510.18, 925)
 scale = Vector2(0.0622701, 0.071021)
-texture = ExtResource("15_je5r7")
+texture = ExtResource("15_1r1vw")

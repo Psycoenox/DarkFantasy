@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://rlcii05mi4fo"]
+
+[ext_resource type="Script" uid="uid://d4ekrcpjluaqn" path="res://scenes/Items/potion/potion.gd" id="1_vgv0t"]
+[ext_resource type="Texture2D" uid="uid://do6xjw7u2vx54" path="res://scenes/Items/potion/pocion-removebg-preview.png" id="2_ql52n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k4ewr"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vgv0t"]
+radius = 8.0
+
+[node name="Potion" type="RigidBody2D"]
+collision_layer = 16
+script = ExtResource("1_vgv0t")
+
+[node name="PotionArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PotionArea"]
+shape = SubResource("CircleShape2D_k4ewr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vgv0t")
+debug_color = Color(0.802465, 0.297725, 0.743256, 0.42)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.84217e-14, -2.38419e-07)
+scale = Vector2(0.0425781, 0.0365078)
+texture = ExtResource("2_ql52n")

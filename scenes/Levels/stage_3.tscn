@@ -1,15 +1,15 @@
 [gd_scene load_steps=19 format=3 uid="uid://da545b8573rqk"]
 
-[ext_resource type="Script" uid="uid://2ydp0fchp23j" path="res://stage_3.gd" id="1_jxe7t"]
-[ext_resource type="Texture2D" uid="uid://cpplrr8dgeatt" path="res://Backgrounds/Backgrounds03Stage/back.png" id="2_s602c"]
-[ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="3_cwwb8"]
-[ext_resource type="PackedScene" uid="uid://bsc8q1mo4omon" path="res://Backgrounds/Backgrounds02Stage/Ilumination/torch.tscn" id="3_xgaru"]
-[ext_resource type="Texture2D" uid="uid://bjjgclety034c" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/OldDarkCastle/tileset_resized_proportional.png" id="4_xgaru"]
-[ext_resource type="Texture2D" uid="uid://bgwgqbme1d5js" path="res://Backgrounds/Backgrounds03Stage/doorclose-removebg-preview.png" id="5_3mian"]
-[ext_resource type="Texture2D" uid="uid://dmyc6funegcap" path="res://Backgrounds/Backgrounds03Stage/dooropen.png" id="6_gti67"]
-[ext_resource type="PackedScene" uid="uid://ddqffb2uipxda" path="res://scenes/Enemy/WizardBoss/WizardBoss.tscn" id="7_katme"]
-[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="8_s602c"]
-[ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="9_cwwb8"]
+[ext_resource type="Script" uid="uid://2ydp0fchp23j" path="res://scenes/Levels/stage_3.gd" id="1_jffn6"]
+[ext_resource type="PackedScene" uid="uid://bsc8q1mo4omon" path="res://Backgrounds/Backgrounds02Stage/Ilumination/torch.tscn" id="2_v7w0g"]
+[ext_resource type="Texture2D" uid="uid://cpplrr8dgeatt" path="res://Backgrounds/Backgrounds03Stage/back.png" id="3_da0dx"]
+[ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="4_a2ih4"]
+[ext_resource type="Texture2D" uid="uid://bjjgclety034c" path="res://Backgrounds/Backgrounds02Stage/Tilemaps/OldDarkCastle/tileset_resized_proportional.png" id="5_l5alh"]
+[ext_resource type="Texture2D" uid="uid://bgwgqbme1d5js" path="res://Backgrounds/Backgrounds03Stage/doorclose-removebg-preview.png" id="6_jsond"]
+[ext_resource type="Texture2D" uid="uid://dmyc6funegcap" path="res://Backgrounds/Backgrounds03Stage/dooropen.png" id="7_365fc"]
+[ext_resource type="PackedScene" uid="uid://ddqffb2uipxda" path="res://scenes/Enemy/WizardBoss/WizardBoss.tscn" id="8_gqmxp"]
+[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="9_b7plg"]
+[ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="10_q2vi6"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_tvv21"]
 
@@ -289,7 +289,7 @@ texture = SubResource("CompressedTexture2D_tvv21")
 0:14/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dsw6v"]
-texture = ExtResource("4_xgaru")
+texture = ExtResource("5_l5alh")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -568,11 +568,11 @@ sources/3 = SubResource("TileSetAtlasSource_dsw6v")
 radius = 76.1643
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sefsa"]
-atlas = ExtResource("5_3mian")
+atlas = ExtResource("6_jsond")
 region = Rect2(0, 0, 500, 500)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xmr8i"]
-atlas = ExtResource("6_gti67")
+atlas = ExtResource("7_365fc")
 region = Rect2(0, 0, 500, 500)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4cvag"]
@@ -595,9 +595,9 @@ animations = [{
 }]
 
 [node name="Stage3" type="Node2D"]
-script = ExtResource("1_jxe7t")
+script = ExtResource("1_jffn6")
 
-[node name="Torch" parent="." instance=ExtResource("3_xgaru")]
+[node name="Torch" parent="." instance=ExtResource("2_v7w0g")]
 position = Vector2(419, 428)
 scale = Vector2(1.53516, 0.844727)
 
@@ -608,9 +608,9 @@ scale = Vector2(1.53516, 0.844727)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(1179, 207.5)
 scale = Vector2(1.53516, 0.844727)
-texture = ExtResource("2_s602c")
+texture = ExtResource("3_da0dx")
 
-[node name="Player" parent="." instance=ExtResource("3_cwwb8")]
+[node name="Player" parent="." instance=ExtResource("4_a2ih4")]
 position = Vector2(1085, 446)
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -654,16 +654,16 @@ scale = Vector2(0.291, 0.273)
 sprite_frames = SubResource("SpriteFrames_4cvag")
 animation = &"open"
 
-[node name="WizardBoss" parent="." instance=ExtResource("7_katme")]
+[node name="WizardBoss" parent="." instance=ExtResource("8_gqmxp")]
 position = Vector2(1320, 494)
 
-[node name="Worm" parent="." instance=ExtResource("8_s602c")]
+[node name="Worm" parent="." instance=ExtResource("9_b7plg")]
 position = Vector2(449, 521)
 
-[node name="WizardBoss2" parent="." instance=ExtResource("7_katme")]
+[node name="WizardBoss2" parent="." instance=ExtResource("8_gqmxp")]
 position = Vector2(-551, 1233)
 
-[node name="Wizard" parent="." instance=ExtResource("9_cwwb8")]
+[node name="Wizard" parent="." instance=ExtResource("10_q2vi6")]
 position = Vector2(671, 134)
 
 [connection signal="body_entered" from="key" to="." method="_on_key_body_entered"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3hxhax3by2h"]
+
+[ext_resource type="Script" uid="uid://dmsv2syulbb3h" path="res://scenes/Items/Maps/world_map.gd" id="1_2pxu8"]
+[ext_resource type="Texture2D" uid="uid://bssudk0en443t" path="res://scenes/Items/Maps/mapa.png" id="2_ej2pd"]
+
+[node name="WorldMap" type="CanvasLayer"]
+script = ExtResource("1_2pxu8")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1153.0
+offset_bottom = 648.0
+texture = ExtResource("2_ej2pd")
+expand_mode = 1
+
+[node name="ButtonZona1" type="Button" parent="."]
+offset_left = 88.0
+offset_top = 62.0
+offset_right = 522.0
+offset_bottom = 251.0
+disabled = true
+
+[node name="ButtonZona2" type="Button" parent="."]
+offset_left = 587.0
+offset_top = 50.0
+offset_right = 1046.0
+offset_bottom = 271.0
+disabled = true
+
+[node name="ButtonZona3" type="Button" parent="."]
+offset_left = 44.0
+offset_top = 294.0
+offset_right = 548.0
+offset_bottom = 506.0
+tooltip_text = "D"
+disabled = true
+
+[node name="ButtonZona4" type="Button" parent="."]
+offset_left = 675.0
+offset_top = 308.0
+offset_right = 1112.0
+offset_bottom = 512.0
+disabled = true
