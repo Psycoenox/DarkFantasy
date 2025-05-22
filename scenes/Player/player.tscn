@@ -1053,7 +1053,8 @@ script = ExtResource("1_cyojo")
 position = Vector2(29, 12)
 scale = Vector2(0.717882, 1.17188)
 sprite_frames = SubResource("SpriteFrames_cyojo")
-animation = &"idle"
+animation = &"hit"
+frame_progress = 0.0781705
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 position = Vector2(30, 60)

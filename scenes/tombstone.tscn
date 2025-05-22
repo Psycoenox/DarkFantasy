@@ -1,9 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://bcgb40psg51ir"]
+[gd_scene load_steps=7 format=3 uid="uid://bcgb40psg51ir"]
 
-[ext_resource type="Script" uid="uid://bjv7usrenutla" path="res://tombstone.gd" id="1_mudpl"]
+[ext_resource type="Script" uid="uid://bjv7usrenutla" path="res://scenes/tombstone.gd" id="1_mudpl"]
+[ext_resource type="Texture2D" uid="uid://buqhkke0m57ya" path="res://scenes/NPCs/Keys/E-Key.png" id="2_c0vnt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c0vnt"]
 size = Vector2(27.5, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mweh2"]
+atlas = ExtResource("2_c0vnt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cghlf"]
+atlas = ExtResource("2_c0vnt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0gfhl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mweh2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cghlf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
 
 [node name="Tombstone" type="Node2D"]
 script = ExtResource("1_mudpl")
@@ -15,6 +38,12 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_c0vnt")
 debug_color = Color(0.582075, 0.551164, 0, 0.42)
+
+[node name="InteractIndicator" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4.76837e-07, -36.625)
+scale = Vector2(0.609375, 0.585937)
+sprite_frames = SubResource("SpriteFrames_0gfhl")
+autoplay = "default"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

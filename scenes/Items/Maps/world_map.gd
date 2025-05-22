@@ -36,13 +36,18 @@ func update_buttons():
 	button_zona3.disabled = !GameManager.desbloquear_zona("3")
 	button_zona4.disabled = !GameManager.desbloquear_zona("4")
 
-
 func _input(event):
 	if event.is_action_pressed("open_map"):
 		visible = not visible
 		if visible:
-			update_buttons()  # 🔄 refrescar visibilidad de botones
+			update_buttons()
 
 func _ir_a_zona(zona: String) -> void:
 	if STAGE_PATHS.has(zona):
+		# Guarda los datos del jugador antes de cambiar de nivel
+		var current_scene = get_tree().get_current_scene()
+		var player = current_scene.get_node_or_null("Player")  # Ajusta si tu Player está en otro nodo
+		if player and player.has_method("save_player_data"):
+			player.save_player_data()
+
 		get_tree().change_scene_to_file(STAGE_PATHS[zona])

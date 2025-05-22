@@ -45,13 +45,30 @@ var attack_damages = {
 func _ready():
 	add_to_group("player")
 
+	max_health = PlayerData.max_health
+	health = PlayerData.health
+	base_attack_damage = PlayerData.attack_damage
+	coins = PlayerData.coins
+
+	# 🔒 Solo aplicar upgrades si aún no se aplicaron
+	if not PlayerData.upgrades_applied:
+		apply_upgrades()
+		PlayerData.upgrades_applied = true
+
+	stats_updated.emit()
+
+	
+	print("🧪 Vida final tras aplicar upgrades: %d / %d" % [health, max_health])
+
+
+
 func _physics_process(delta):
 	var dir := Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 
 	if not can_move:
 		return
 
-	# 🪙 Atracción de monedas
+	# 🪙 Atracción de monedasmmmmmmammdadmamdmamdm
 	if Input.is_action_pressed("interact"):
 		var coins = get_tree().get_nodes_in_group("coins")
 		for coin in coins:
@@ -119,6 +136,21 @@ func _physics_process(delta):
 	velocity.y = clamp(velocity.y, -9999, max_fall_speed)
 	move_and_slide()
 
+func apply_upgrades():
+	var health_lvl = PlayerData.upgrades.health_lvl
+	var damage_lvl = PlayerData.upgrades.damage_lvl
+
+	# Mejora la vida según nivel
+	max_health += health_lvl * 10
+	health = max_health
+
+	# Mejora el daño base
+	base_attack_damage += damage_lvl * 5
+
+	# Actualiza daños en el diccionario si lo usas
+	attack_damages["first_attack"] = base_attack_damage
+
+	print("🟢 Mejoras aplicadas: +%d vida, +%d daño" % [health_lvl * 10, damage_lvl * 5])
 
 # 🆕 Verificación por frame para aplicar daño mientras se ataca
 func _process(delta):
@@ -186,15 +218,13 @@ func _on_animated_sprite_2d_animation_finished():
 	combo_step = 0
 
 func take_damage(amount := 1):
-	if invuln_timer.time_left > 0:
-		print("⏳ Invulnerable, daño ignorado")
-		return
 
 	if is_blocking:
 		print("🛡️ Bloqueo exitoso. Sin daño.")
 		return
 
 	health -= amount
+	health = max(0,health) 
 	takedamage.emit()
 	print("Player recibió %s de Daño. Salud: %s" % [amount, health])
 
@@ -225,16 +255,26 @@ func heal(amount: int):
 	health = min(health, max_health)
 	emit_signal("takedamage")  # Esto actualiza la barra de vida si usas esa señal
 
+func save_player_data():
+	PlayerData.max_health = max_health
+	PlayerData.health = health
+	PlayerData.attack_damage = base_attack_damage
+	PlayerData.coins = coins
 
 func die():
+	save_player_data()
 	print("Jugador ha muerto")
-	sprite.play("death")  # ▶️ Reproducir animación de muerte
+	sprite.play("death")
 	can_move = false
-	set_physics_process(false)  # Opcional: desactiva el movimiento mientras muere
+	set_physics_process(false)
 
-	await sprite.animation_finished  # Esperar a que termine la animación
+	await sprite.animation_finished
 
-	get_tree().reload_current_scene()
+	# 🔁 Restaurar salud antes de reiniciar
+	PlayerData.health = PlayerData.max_health
+
+	get_tree().call_deferred("reload_current_scene")
+
 
 
 

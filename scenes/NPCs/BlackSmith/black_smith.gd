@@ -11,23 +11,20 @@ extends CharacterBody2D
 
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var area := $DetectArea
-@onready var interaction_icon := $Sprite2D
 @onready var dialog_scene := preload("res://scenes/dialog_popup.tscn")
 @onready var upgrade_menu_scene := preload("res://scenes/NPCs/BlackSmith/black_smith_upgrade_menu.tscn")
 
 var player_in_range := false
 var dialogue_active := false
 var player_ref: Node2D = null
+var npc_contado := false  # ✅ Para no contar dos veces
 
 func _ready() -> void:
-	interaction_icon.visible = false
 	area.connect("body_entered", _on_detect_area_body_entered)
 	area.connect("body_exited", _on_detect_area_body_exited)
 	animated_sprite.play("idle")
 
 func _process(_delta):
-	interaction_icon.visible = player_in_range
-
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		if not dialogue_active:
 			var popup = dialog_scene.instantiate()
@@ -57,9 +54,17 @@ func _on_detect_area_body_exited(body: Node2D) -> void:
 func _on_dialogue_finished():
 	dialogue_active = false
 
-	var stage = get_tree().get_root().get_node_or_null("Stage1")
-	if stage and stage.has_method("registrar_npc_hablado"):
-		stage.registrar_npc_hablado()
+	if not npc_contado:
+		npc_contado = true  # ✅ Marcamos como contado solo una vez
+
+		var current_scene = get_tree().get_current_scene()
+		var mission_ui = current_scene.get_node_or_null("MissionDisplay")
+
+		if current_scene and current_scene.has_method("registrar_npc_hablado"):
+			current_scene.registrar_npc_hablado()
+
+		if mission_ui and mission_ui.has_method("registrar_npc"):
+			mission_ui.registrar_npc()
 
 	if player_ref:
 		var upgrade_menu = upgrade_menu_scene.instantiate()

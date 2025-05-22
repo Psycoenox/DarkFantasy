@@ -27,6 +27,7 @@ signal boss_defeated
 
 
 func _ready():
+	add_to_group("enemy")
 	sprite.play("idle")
 
 	attack_timer.wait_time = attack_cooldown
@@ -73,6 +74,9 @@ func take_damage(amount := 1):
 		die()
 
 func die():
+	var stage = get_tree().get_current_scene()
+	if stage and stage.has_method("registrar_enemigo_derrotado"):
+		stage.registrar_enemigo_derrotado()
 	is_alive = false
 	print("☠️ Boss derrotado, emitiendo señal")
 	emit_signal("boss_defeated")

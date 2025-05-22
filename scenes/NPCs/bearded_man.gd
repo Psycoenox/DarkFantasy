@@ -10,21 +10,18 @@ extends CharacterBody2D
 
 @onready var animated_sprite := $AnimatedSprite2D
 @onready var area := $DetectArea
-@onready var interaction_icon := $Sprite2D
-@onready var dialog_scene = preload("res://scenes/dialog_popup.tscn")  # Ajusta si está en otra ruta
+@onready var dialog_scene = preload("res://scenes/dialog_popup.tscn")
 
 var player_in_range := false
 var dialogue_active := false
+var npc_contado := false  # ✅ Para evitar múltiples registros
 
 func _ready() -> void:
-	interaction_icon.visible = false
 	area.connect("body_entered", _on_detect_area_body_entered)
 	area.connect("body_exited", _on_detect_area_body_exited)
 	animated_sprite.play("idle")
 
 func _process(_delta):
-	interaction_icon.visible = player_in_range
-
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		if not dialogue_active:
 			var popup = dialog_scene.instantiate()
@@ -37,7 +34,6 @@ func _process(_delta):
 			if popup:
 				popup.advance_text()
 
-
 func _on_detect_area_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		player_in_range = true
@@ -49,6 +45,16 @@ func _on_detect_area_body_exited(body: Node2D) -> void:
 func _on_dialogue_finished():
 	dialogue_active = false
 
-	var stage = get_tree().get_root().get_node_or_null("Stage1")
-	if stage and stage.has_method("registrar_npc_hablado"):
-		stage.registrar_npc_hablado()
+	if npc_contado:
+		return  # 🛑 Ya fue contado, no hacer nada
+
+	npc_contado = true  # ✅ Marcar como registrado
+
+	var current_scene = get_tree().get_current_scene()
+	var mission_ui = current_scene.get_node_or_null("MissionDisplay")
+
+	if current_scene and current_scene.has_method("registrar_npc_hablado"):
+		current_scene.registrar_npc_hablado()
+
+	if mission_ui and mission_ui.has_method("registrar_npc"):
+		mission_ui.registrar_npc()

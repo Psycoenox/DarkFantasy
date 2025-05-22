@@ -21,6 +21,7 @@ var is_dead := false
 @onready var timer := $ShootTimer
 
 func _ready():
+	add_to_group("enemy")
 	timer.wait_time = shoot_cooldown
 	timer.connect("timeout", _on_shoot_timer_timeout)
 	sprite.connect("frame_changed", _on_frame_changed)
@@ -112,6 +113,9 @@ func take_damage(amount := 1):
 		has_summoned = true
 
 func die():
+	var stage = get_tree().get_current_scene()
+	if stage and stage.has_method("registrar_enemigo_derrotado"):
+		stage.registrar_enemigo_derrotado()
 	if is_dead:
 		return
 	is_dead = true

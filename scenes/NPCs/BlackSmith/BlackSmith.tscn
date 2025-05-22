@@ -1,8 +1,7 @@
-[gd_scene load_steps=16 format=3 uid="uid://c5v2sfgi0vfv4"]
+[gd_scene load_steps=13 format=3 uid="uid://c5v2sfgi0vfv4"]
 
 [ext_resource type="Script" uid="uid://cy2o46lx2x8ol" path="res://scenes/NPCs/BlackSmith/black_smith.gd" id="1_xu88g"]
 [ext_resource type="Texture2D" uid="uid://dkschvcjx71r2" path="res://scenes/NPCs/BlackSmith/BLACKSMITH.png" id="2_ts32n"]
-[ext_resource type="Texture2D" uid="uid://bakg0d38jq1xg" path="res://scenes/NPCs/e-Photoroom.png" id="3_ts32n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_14f8b"]
 atlas = ExtResource("2_ts32n")
@@ -73,21 +72,6 @@ height = 52.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_fntsf"]
 radius = 46.6905
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r0avh"]
-atlas = ExtResource("3_ts32n")
-region = Rect2(0, 0, 1024, 1024)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_26gvp"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r0avh")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="CharacterBody2D" type="CharacterBody2D"]
 collision_layer = 32
 collision_mask = 3
@@ -108,11 +92,6 @@ collision_mask = 3
 
 [node name="DetectCollision" type="CollisionShape2D" parent="DetectArea"]
 shape = SubResource("CircleShape2D_fntsf")
-
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(34, -59)
-scale = Vector2(0.038086, 0.0312501)
-sprite_frames = SubResource("SpriteFrames_26gvp")
 
 [connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

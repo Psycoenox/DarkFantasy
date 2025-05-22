@@ -1,9 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://bstec2h8bkd4h"]
+[gd_scene load_steps=18 format=3 uid="uid://bstec2h8bkd4h"]
 
 [ext_resource type="Script" uid="uid://blbrcu0mnbf1m" path="res://scenes/NPCs/bearded_man.gd" id="1_76h8k"]
 [ext_resource type="Texture2D" uid="uid://bv3jyfwuh0rvc" path="res://scenes/NPCs/bearded-idle.png" id="2_xt067"]
 [ext_resource type="Texture2D" uid="uid://d0w3fnl5c5bqa" path="res://scenes/NPCs/bearded-walk.png" id="3_63sq3"]
-[ext_resource type="Texture2D" uid="uid://buqhkke0m57ya" path="res://scenes/NPCs/Keys/E-Key.png" id="4_xt067"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eq7kl"]
 atlas = ExtResource("2_xt067")
@@ -102,33 +101,6 @@ height = 46.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_76h8k"]
 radius = 71.1758
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_63sq3"]
-atlas = ExtResource("4_xt067")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1ha07"]
-atlas = ExtResource("4_xt067")
-region = Rect2(32, 0, 32, 32)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_dpyyi"]
-animations = [{
-"frames": [],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_63sq3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1ha07")
-}],
-"loop": true,
-"name": &"e",
-"speed": 7.0
-}]
-
 [node name="BeardedMan" type="CharacterBody2D"]
 collision_layer = 32
 collision_mask = 3
@@ -148,14 +120,6 @@ collision_mask = 3
 [node name="CollisionDetect" type="CollisionShape2D" parent="DetectArea"]
 shape = SubResource("CircleShape2D_76h8k")
 debug_color = Color(0.575612, 0.552428, 0.102289, 0.42)
-
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-visible = false
-position = Vector2(-9.53674e-07, -45)
-scale = Vector2(0.668091, 0.544067)
-sprite_frames = SubResource("SpriteFrames_dpyyi")
-animation = &"e"
-frame_progress = 0.313715
 
 [connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
 [connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

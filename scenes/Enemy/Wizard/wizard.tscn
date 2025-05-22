@@ -402,7 +402,7 @@ coin_scene = ExtResource("2_61051")
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(44, 22)
 sprite_frames = SubResource("SpriteFrames_y3wmw")
-animation = &"death"
+animation = &"attack_2"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(42, 38)

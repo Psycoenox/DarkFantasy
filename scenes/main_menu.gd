@@ -16,7 +16,7 @@ func _ready():
 	salir_button.pressed.connect(_on_salir_pressed)
 
 func _on_jugar_pressed():
-	get_tree().change_scene_to_file("res://scenes/Player/stage_1.tscn")
+	get_tree().change_scene_to_file("res://scenes/Levels/stage_1.tscn")
 
 func _on_cargar_pressed():
 	print("Funcionalidad de cargar partida aún no implementada.")
