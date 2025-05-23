@@ -1,0 +1,52 @@
+[gd_scene load_steps=2 format=3 uid="uid://b06ljcwv2l3h8"]
+
+[ext_resource type="Script" uid="uid://dluqwcp7nhvbq" path="res://scenes/options_menu.gd" id="1_liyum"]
+
+[node name="OptionsMenu" type="CanvasLayer"]
+script = ExtResource("1_liyum")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Musica" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Musica"
+
+[node name="MusicSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Efectos"
+
+[node name="SFXSlider" type="HSlider" parent="Panel/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Volver
+"
+
+[connection signal="value_changed" from="Panel/VBoxContainer/HBoxContainer/MusicSlider" to="." method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="Panel/VBoxContainer/HBoxContainer2/SFXSlider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=115 format=3 uid="uid://bt3ppu15opmj6"]
+[gd_scene load_steps=116 format=3 uid="uid://bt3ppu15opmj6"]
 
 [ext_resource type="Script" uid="uid://b4ligmeqsnsnc" path="res://scenes/Enemy/MinotaurBoss/boss.gd" id="1_vp0m2"]
 [ext_resource type="Texture2D" uid="uid://ctdfj4qcxwsfo" path="res://scenes/Enemy/MinotaurBoss/mino_v1.1_full/animations/minotaur_288x160_SpriteSheet.png" id="1_ybgq3"]
+[ext_resource type="AudioStream" uid="uid://csiinplyw6dy5" path="res://scenes/Enemy/MinotaurBoss/mino_v1.1_full/audio/bossbreathe.mp3" id="3_oq2ah"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vp0m2"]
 atlas = ExtResource("1_ybgq3")
@@ -816,16 +817,15 @@ size = Vector2(93, 88)
 size = Vector2(105, 127)
 
 [node name="Boss" type="CharacterBody2D"]
-position = Vector2(10, 10)
+position = Vector2(267, 143)
 scale = Vector2(1.86045, 1.78766)
 collision_layer = 4
 script = ExtResource("1_vp0m2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1.075, -1.11878)
 sprite_frames = SubResource("SpriteFrames_h02tf")
-animation = &"Attack_1"
-frame = 15
-frame_progress = 1.0
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.5, 20)
@@ -841,6 +841,10 @@ collision_mask = 2
 position = Vector2(-52.5, 8.5)
 shape = SubResource("RectangleShape2D_s32th")
 debug_color = Color(0.992157, 0, 0.247059, 0.101961)
+
+[node name="BossBreath" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_oq2ah")
+bus = &"SFX"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cr5ct6uepj34k"]
+[gd_scene load_steps=20 format=3 uid="uid://cr5ct6uepj34k"]
 
 [ext_resource type="Script" uid="uid://djhrgc05fsgk7" path="res://scenes/Levels/stage_4.gd" id="1_1wnqt"]
 [ext_resource type="Texture2D" uid="uid://c7pt2cigir02q" path="res://Backgrounds/Background04Stage/treasure-hoard-platform/PNG/back-gold.png" id="1_8j2g3"]
@@ -8,6 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://c0hnvxsrfjcmw" path="res://Backgrounds/Background04Stage/treasure-hoard-platform/PNG/treasure-hoard-background-preview.png" id="5_w40xj"]
 [ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="6_y0dk1"]
 [ext_resource type="PackedScene" uid="uid://bt3ppu15opmj6" path="res://scenes/Enemy/MinotaurBoss/boss.tscn" id="7_i4xmd"]
+[ext_resource type="AudioStream" uid="uid://kpokaffi0amt" path="res://scenes/Levels/audio/Boss.mp3" id="9_vekro"]
+[ext_resource type="Texture2D" uid="uid://ctqxnksqyo0fx" path="res://scenes/Enemy/MinotaurBoss/mino_v1.1_full/bonus_mino_healthbar_UI/mino_health_under.png" id="10_mgo0f"]
+[ext_resource type="Texture2D" uid="uid://bnrrhbose2fef" path="res://scenes/Enemy/MinotaurBoss/mino_v1.1_full/bonus_mino_healthbar_UI/mino_health_over.png" id="11_00exw"]
+[ext_resource type="Texture2D" uid="uid://buurhesube6yo" path="res://scenes/Enemy/MinotaurBoss/mino_v1.1_full/bonus_mino_healthbar_UI/mino_health_progress.png" id="12_qxfso"]
+[ext_resource type="PackedScene" uid="uid://b06ljcwv2l3h8" path="res://scenes/options_menu.tscn" id="13_00exw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mgo0f"]
 texture = ExtResource("1_8j2g3")
@@ -619,7 +624,38 @@ layer_3/z_index = -3
 layer_3/tile_data = PackedInt32Array(983049, 0, 2, 983050, 65536, 2, 917515, 131072, 1, 983051, 131072, 2, 851980, 196608, 0, 917516, 196608, 1, 983052, 196608, 2, 851981, 262144, 0, 917517, 262144, 1, 983053, 262144, 2, 851982, 327680, 0, 917518, 327680, 1, 983054, 327680, 2, 851983, 393216, 0, 917519, 393216, 1, 983055, 393216, 2, 851984, 458752, 0, 917520, 458752, 1, 983056, 458752, 2, 917521, 524288, 1, 983057, 524288, 2, 917522, 589824, 1, 983058, 589824, 2, 983059, 655360, 2, 983061, 786432, 2, 917526, 851968, 1, 983062, 851968, 2, 917527, 917504, 1, 983063, 917504, 2, 851992, 983040, 0, 917528, 983040, 1, 983064, 983040, 2, 851993, 1048576, 0, 917529, 1048576, 1, 983065, 1048576, 2, 851994, 1114112, 0, 917530, 1114112, 1, 983066, 1114112, 2, 851995, 1179648, 0, 917531, 1179648, 1, 983067, 1179648, 2, 917532, 1245184, 1, 983068, 1245184, 2, 917533, 1310720, 1, 983069, 1310720, 2, 983070, 1376256, 2, 983072, 0, 2, 983073, 65536, 2, 917538, 131072, 1, 983074, 131072, 2, 852003, 196608, 0, 917539, 196608, 1, 983075, 196608, 2, 852004, 262144, 0, 917540, 262144, 1, 983076, 262144, 2, 852005, 327680, 0, 917541, 327680, 1, 983077, 327680, 2, 852006, 393216, 0, 917542, 393216, 1, 983078, 393216, 2, 852007, 458752, 0, 917543, 458752, 1, 983079, 458752, 2, 917544, 524288, 1, 983080, 524288, 2, 917545, 589824, 1, 983081, 589824, 2, 983082, 655360, 2, 983084, 786432, 2, 917549, 851968, 1, 983085, 851968, 2, 917550, 917504, 1, 983086, 917504, 2, 852015, 983040, 0, 917551, 983040, 1, 983087, 983040, 2, 852016, 1048576, 0, 917552, 1048576, 1, 983088, 1048576, 2, 852017, 1114112, 0, 917553, 1114112, 1, 983089, 1114112, 2, 852018, 1179648, 0, 917554, 1179648, 1, 983090, 1179648, 2, 917555, 1245184, 1, 983091, 1245184, 2, 917556, 1310720, 1, 983092, 1310720, 2, 983093, 1376256, 2)
 
 [node name="Boss" parent="." instance=ExtResource("7_i4xmd")]
-position = Vector2(679, 360)
+position = Vector2(711, 262)
+health_bar_path = NodePath("../CanvasLayer/BossHealthUI/HealthBar")
 
 [node name="Player" parent="." instance=ExtResource("6_y0dk1")]
 position = Vector2(133, 357)
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_vekro")
+bus = &"Music"
+parameters/looping = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 0
+
+[node name="BossHealthUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/BossHealthUI"]
+layout_mode = 0
+offset_left = 353.0
+offset_top = -2.0
+offset_right = 513.0
+offset_bottom = 62.0
+scale = Vector2(2.9359, 2.34032)
+max_value = 400.0
+texture_under = ExtResource("10_mgo0f")
+texture_over = ExtResource("11_00exw")
+texture_progress = ExtResource("12_qxfso")
+texture_progress_offset = Vector2(8, 0)
+
+[node name="OptionsMenu" parent="." instance=ExtResource("13_00exw")]
+visible = false

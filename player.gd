@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 signal takedamage
 signal stats_updated # señal para daño o vida
+signal mana_changed
 
 @export var speed := 120
 @export var jump_force := -400
@@ -16,8 +17,11 @@ signal stats_updated # señal para daño o vida
 @export var special_damage := 75
 @export var max_health := 100
 @export var health := max_health
+@export var max_mana := 100
+@export var special_mana_cost := 50
 
 var is_attacking := false
+var mana := max_mana
 var coins := 999
 var is_blocking := false
 var is_special_attacking := false
@@ -27,6 +31,15 @@ var combo_step := 0
 var queued_combo := false
 var current_attack_damage := 0
 var can_move := true
+var damage_frames := {
+	"first_attack": [4, 5],
+	"attack_combo_3": [4, 5, 7, 8],
+	"full_combo_attack": [4, 5, 6],
+	"special_attack":[12,13,14]
+}
+var already_hit_this_frame := {}
+var active_damage_frames := []
+
 
 # 🆕 Lista para evitar aplicar daño varias veces en un mismo ataque
 var damaged_bodies := []
@@ -37,13 +50,18 @@ var attack_damages = {
 	"attack_combo_3": combo_2_damage,
 	"full_combo_attack": combo_3_damage
 }
+var attack_offset_x: float
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var attack_area: Area2D = $AttackArea
-@onready var invuln_timer: Timer = $InvulnTimer
+@onready var first_attack_sound := $FirstAttackSound
+@onready var combo3_sound := $Combo3Sound
+@onready var full_combo_sound := $FullComboSound
+@onready var special_attack_sound := $SpecialAttackSound
 @onready var world_map_scene := preload("res://scenes/Items/Maps/world_map.tscn")
 func _ready():
 	add_to_group("player")
+	$ManaRegenTimer.timeout.connect(_on_mana_regen_timer_timeout)
 
 	max_health = PlayerData.max_health
 	health = PlayerData.health
@@ -59,6 +77,7 @@ func _ready():
 
 	
 	print("🧪 Vida final tras aplicar upgrades: %d / %d" % [health, max_health])
+	attack_offset_x = attack_area.position.x
 
 
 
@@ -110,8 +129,13 @@ func _physics_process(delta):
 			sprite.play("idle")
 
 	# 🔄 Flip
+	# 🔄 Flip
 	if dir != 0:
-		sprite.flip_h = dir < 0
+		var flipped := dir < 0
+		if sprite.flip_h != flipped:
+			sprite.flip_h = flipped
+			attack_area.scale.x = -0.25 if sprite.flip_h else 1
+
 
 	# ⚔️ ATAQUE
 	if Input.is_action_just_pressed("attack"):
@@ -152,13 +176,38 @@ func apply_upgrades():
 
 	print("🟢 Mejoras aplicadas: +%d vida, +%d daño" % [health_lvl * 10, damage_lvl * 5])
 
-# 🆕 Verificación por frame para aplicar daño mientras se ataca
-func _process(delta):
+func _process(_delta):
+	# 🔁 Regeneración pasiva de maná
+	if mana < max_mana:
+		mana += 10 * _delta
+		mana = min(mana, max_mana)
+		mana_changed.emit()
+
+	# 💥 Verificación por frame para aplicar daño durante ataques
 	if is_attacking or is_special_attacking:
-		for body in attack_area.get_overlapping_bodies():
-			if not damaged_bodies.has(body) and body.has_method("take_damage"):
-				damaged_bodies.append(body)
-				body.take_damage(current_attack_damage)
+		var current_anim = sprite.animation
+		var current_frame = sprite.frame
+
+		if damage_frames.has(current_anim):
+			if current_frame in damage_frames[current_anim] and not already_hit_this_frame.has(current_frame):
+				for body in attack_area.get_overlapping_bodies():
+					if body.has_method("take_damage") and not damaged_bodies.has(body):
+						body.take_damage(current_attack_damage)
+						damaged_bodies.append(body)
+						print("💥 Daño aplicado en frame:", current_frame)
+
+				# 🔊 Efectos de sonido por tipo de ataque
+				if current_anim == "special_attack" and current_frame == 13 and special_attack_sound:
+					special_attack_sound.play()
+				elif current_anim == "attack_combo_3" and combo3_sound:
+					combo3_sound.play()
+
+				already_hit_this_frame[current_frame] = true
+	else:
+		already_hit_this_frame.clear()
+
+
+
 
 func set_can_move(value: bool) -> void:
 	can_move = value
@@ -166,6 +215,10 @@ func set_can_move(value: bool) -> void:
 		velocity = Vector2.ZERO
 		sprite.play("idle")
 
+func recover_mana(amount: int):
+	mana += amount
+	mana = min(mana, max_mana)
+	mana_changed.emit()  # 🔁 Actualizar la UI
 
 func start_attack(anim_name: String, step: int):
 	is_attacking = true
@@ -173,23 +226,48 @@ func start_attack(anim_name: String, step: int):
 	combo_step = step
 	queued_combo = false
 
-	# 🆕 Limpiar lista de enemigos dañados
 	damaged_bodies.clear()
+	already_hit_this_frame.clear()
 
-	# 🆕 Asignar daño desde el diccionario
 	current_attack_damage = attack_damages.get(anim_name, base_attack_damage)
-
 	sprite.play(anim_name)
 	attack_area.monitoring = true
 	print("Iniciando ataque:", anim_name)
 
+	if damage_frames.has(anim_name):
+		active_damage_frames = damage_frames[anim_name].duplicate() as Array[int]
+	else:
+		active_damage_frames = []
+
+	# 🔊 Reproducir sonido correspondiente al ataque
+	match anim_name:
+		"first_attack":
+			if first_attack_sound:
+				first_attack_sound.play()
+		"full_combo_attack":
+			if full_combo_sound:
+				full_combo_sound.play()
+
+
+
+
 func start_special_attack():
+	if mana < special_mana_cost:
+		print("❌ No hay suficiente maná para el ataque especial.")
+		return
+
 	is_special_attacking = true
 	current_attack_damage = special_damage
-	damaged_bodies.clear()  # 🆕 Limpiar también para el ataque especial
+	damaged_bodies.clear()
 	sprite.play("special_attack")
 	attack_area.monitoring = true
-	print("¡Ataque especial!")
+
+	mana -= special_mana_cost
+	mana = max(0, mana)
+	mana_changed.emit()  # 🔁 Notificar a la UI
+	print("✨ ¡Ataque especial lanzado! Maná restante:", mana)
+
+
 
 func start_roll():
 	is_rolling = true
@@ -218,21 +296,24 @@ func _on_animated_sprite_2d_animation_finished():
 	combo_step = 0
 
 func take_damage(amount := 1):
-
 	if is_blocking:
 		print("🛡️ Bloqueo exitoso. Sin daño.")
 		return
 
 	health -= amount
-	health = max(0,health) 
+	health = max(0, health)
 	takedamage.emit()
 	print("Player recibió %s de Daño. Salud: %s" % [amount, health])
 
 	sprite.modulate = Color(1, 0.5, 0.5)
-	invuln_timer.start(invuln_time)
+
+	if health > 0:
+		sprite.play("hit")
 
 	if health <= 0:
 		die()
+
+
 		
 func _notification(what):
 	if what == NOTIFICATION_EXIT_TREE and not get_tree().get_root().has_node("WorldMap"):
@@ -276,15 +357,8 @@ func die():
 	get_tree().call_deferred("reload_current_scene")
 
 
-
-
-
-# ❌ Ya no se necesita este método si usamos get_overlapping_bodies()
-# func _on_attack_area_body_entered(body: Node2D) -> void:
-#     if not is_attacking and not is_special_attacking:
-#         return
-#     if damaged_bodies.has(body):
-#         return
-#     if body.has_method("take_damage"):
-#         damaged_bodies.append(body)
-#         body.take_damage(current_attack_damage)
+func _on_mana_regen_timer_timeout():
+	if mana < max_mana:
+		mana += 1
+		mana = min(mana, max_mana)
+		mana_changed.emit()

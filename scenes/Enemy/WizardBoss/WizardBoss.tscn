@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://ddqffb2uipxda"]
+[gd_scene load_steps=81 format=3 uid="uid://ddqffb2uipxda"]
 
 [ext_resource type="Texture2D" uid="uid://qs3u14fsnpg3" path="res://scenes/Enemy/WizardBoss/Evil Wizard 3/Sprites/Attack.png" id="1_slvvd"]
 [ext_resource type="Script" uid="uid://b7b47gssnpjoa" path="res://scenes/Enemy/WizardBoss/wizard_boss.gd" id="1_ux28f"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://d02iis5kbc21k" path="res://scenes/Enemy/WizardBoss/Evil Wizard 3/Sprites/Jump.png" id="6_xajy4"]
 [ext_resource type="Texture2D" uid="uid://dgjy1bwji5igc" path="res://scenes/Enemy/WizardBoss/Evil Wizard 3/Sprites/Run.png" id="7_v18u6"]
 [ext_resource type="Texture2D" uid="uid://bx4tjc3bar8o0" path="res://scenes/Enemy/WizardBoss/Evil Wizard 3/Sprites/Walk.png" id="8_yao36"]
+[ext_resource type="AudioStream" uid="uid://dkntmjpiv2a28" path="res://scenes/Enemy/WizardBoss/Sound/foom_0.wav" id="10_u3hll"]
+[ext_resource type="AudioStream" uid="uid://cgwt7sioub6tr" path="res://scenes/Enemy/WizardBoss/Sound/incarnatewav.wav" id="11_rrqgn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1jnmt"]
 atlas = ExtResource("1_slvvd")
@@ -552,6 +554,14 @@ position = Vector2(35, -15)
 
 [node name="SummonPoint" type="Marker2D" parent="."]
 position = Vector2(65, -4)
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_u3hll")
+bus = &"SFX"
+
+[node name="SummonSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_rrqgn")
+bus = &"SFX"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

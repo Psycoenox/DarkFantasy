@@ -30,9 +30,14 @@ func open_chest():
 	is_open = true
 	sprite.play("open")
 
-	await sprite.animation_finished  # Esperar a que termine la animación
+	# 🔊 Reproducir sonido
+	if has_node("OpenChest"):
+		$OpenChest.play()
+
+	await sprite.animation_finished
 
 	spawn_loot()
+
 
 func spawn_loot():
 	var coin_count = randi_range(1, 10)

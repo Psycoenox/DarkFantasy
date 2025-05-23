@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://d0pu0tqap3mrk"]
+[gd_scene load_steps=18 format=3 uid="uid://d0pu0tqap3mrk"]
 
 [ext_resource type="Script" uid="uid://yk6nemlv4mxt" path="res://scenes/Items/Chest/chest.gd" id="1_dcolw"]
 [ext_resource type="Texture2D" uid="uid://b81swnltacc2m" path="res://scenes/Items/Chest/Chests.png" id="1_p1ac8"]
 [ext_resource type="PackedScene" uid="uid://tcgon8y1cng5" path="res://scenes/Items/Coin/coin.tscn" id="2_us584"]
 [ext_resource type="PackedScene" uid="uid://rlcii05mi4fo" path="res://scenes/Items/potion/potion.tscn" id="3_3rsjn"]
+[ext_resource type="AudioStream" uid="uid://scwphx73nh1h" path="res://scenes/Items/Chest/Sound/Chest Creak.wav" id="5_3rsjn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nyhjw"]
 atlas = ExtResource("1_p1ac8")
@@ -109,3 +110,7 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_nmpm0")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="OpenChest" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_3rsjn")
+bus = &"SFX"

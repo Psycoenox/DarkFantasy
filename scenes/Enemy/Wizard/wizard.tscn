@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://bn5netgeci1m5"]
+[gd_scene load_steps=63 format=3 uid="uid://bn5netgeci1m5"]
 
 [ext_resource type="Script" uid="uid://dk1coki6385dt" path="res://scenes/Enemy/Wizard/wizard.gd" id="1_5d7o8"]
 [ext_resource type="Texture2D" uid="uid://clfl8leitxdm3" path="res://scenes/Enemy/Wizard/Attack1.png" id="1_d675x"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d2eif4s67av6h" path="res://scenes/Enemy/Wizard/Jump.png" id="6_sa7j6"]
 [ext_resource type="Texture2D" uid="uid://7ae20tcv2yi7" path="res://scenes/Enemy/Wizard/Run.png" id="7_jyq1n"]
 [ext_resource type="Texture2D" uid="uid://5y8gledexomh" path="res://scenes/Enemy/Wizard/Death.png" id="8_0n35t"]
+[ext_resource type="AudioStream" uid="uid://dl48nnwy6d7qo" path="res://scenes/Enemy/Wizard/Sounds/qubodup-ccbysa3-elementalSpell-opengameart1.wav" id="11_q1480"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dco10"]
 atlas = ExtResource("1_d675x")
@@ -402,7 +403,9 @@ coin_scene = ExtResource("2_61051")
 [node name="Animation" type="AnimatedSprite2D" parent="."]
 position = Vector2(44, 22)
 sprite_frames = SubResource("SpriteFrames_y3wmw")
-animation = &"attack_2"
+animation = &"death"
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(42, 38)
@@ -432,6 +435,10 @@ curve = SubResource("Curve2D_qbaje")
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 
 [node name="AttackTimer" type="Timer" parent="."]
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_q1480")
+bus = &"SFX"
 
 [connection signal="animation_finished" from="Animation" to="." method="_on_animation_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

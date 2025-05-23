@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var patrol_points: Array[Vector2] = []
 @export var attack_range := 80.0
 @export var attack_cooldown := 8.0
-@export var health := 80
+@export var health := 160
 @export var damage := 30
 @export var coin_scene: PackedScene
 
@@ -128,11 +128,15 @@ func attack():
 	velocity = Vector2.ZERO
 	can_attack = false
 	has_hit = false
-	damaged_in_frame.clear()  # ✅ limpiar frames al comenzar ataque
+	damaged_in_frame.clear()
 
 	var chosen_attack = attack_animations[randi() % attack_animations.size()]
 	sprite.play(chosen_attack)
 	attack_timer.start(attack_cooldown)
+
+	# ✅ Reproducir sonido de ataque
+	if has_node("AttackSound"):
+		$AttackSound.play()
 
 func take_damage(amount := 1):
 	if state == "dead":

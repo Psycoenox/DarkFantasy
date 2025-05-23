@@ -3,7 +3,7 @@ extends CharacterBody2D
 @export var shoot_cooldown := 2.0
 @export var projectile_scene: PackedScene = preload("res://scenes/Enemy/WizardBoss/projectile.tscn")
 @export var detection_range := 400.0
-@export var health := 5
+@export var health := 60
 @export var gravity := 800.0
 @export var max_fall_speed := 1000.0
 @export var stop_distance := 240.0
@@ -92,6 +92,11 @@ func _fire_projectile():
 
 	print("🧭 Dirección del proyectil:", dir)
 	print("🔫 Proyectil disparado")
+
+	# ✅ Reproducir sonido de disparo
+	if has_node("AttackSound"):
+		$AttackSound.play()
+
 
 func take_damage(amount := 1):
 	if is_dead:

@@ -1,8 +1,13 @@
-[gd_scene load_steps=144 format=3 uid="uid://dpg5tv3rt3op4"]
+[gd_scene load_steps=153 format=3 uid="uid://dpg5tv3rt3op4"]
 
 [ext_resource type="Script" uid="uid://b27qrusdfntst" path="res://player.gd" id="1_cyojo"]
 [ext_resource type="Texture2D" uid="uid://cwddxqvnwsg40" path="res://SpriteSheet/Player/fire_FREE_SpriteSheet_288x128.png" id="2_1kbk7"]
 [ext_resource type="Script" uid="uid://cqvj65p7tqllx" path="res://scenes/Player/progress_bar.gd" id="3_gqjuk"]
+[ext_resource type="AudioStream" uid="uid://dpcdfuhxstfhy" path="res://scenes/Player/Sound/special.wav" id="4_c4h5g"]
+[ext_resource type="Script" uid="uid://csj5rwy74kjtm" path="res://scenes/Player/ManaBar.gd" id="4_dl1wr"]
+[ext_resource type="AudioStream" uid="uid://duvi4kchjrujc" path="res://scenes/Player/Sound/firstattack.wav" id="4_uiqp4"]
+[ext_resource type="AudioStream" uid="uid://ca8touprt2vns" path="res://scenes/Player/Sound/melee sound.wav" id="5_hvfru"]
+[ext_resource type="AudioStream" uid="uid://bnrl5om1hnyag" path="res://scenes/Player/Sound/flame_(mp3cut.net)_out.mp3" id="6_a06cl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gqjuk"]
 atlas = ExtResource("2_1kbk7")
@@ -804,7 +809,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_wbdqw")
 }],
-"loop": true,
+"loop": false,
 "name": &"hit",
 "speed": 9.0
 }, {
@@ -1042,7 +1047,20 @@ height = 52.0
 radius = 29.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1kbk7"]
-radius = 56.0
+radius = 44.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dl1wr"]
+bg_color = Color(0.6, 0.6, 0.6, 0.231373)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7rn1"]
+bg_color = Color(0.392157, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wwtew"]
+bg_color = Color(0.6, 0.6, 0.6, 0.231373)
+border_color = Color(0.8, 0.8, 0.8, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uxo23"]
+bg_color = Color(0.0666667, 0, 0.403922, 1)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -1054,7 +1072,6 @@ position = Vector2(29, 12)
 scale = Vector2(0.717882, 1.17188)
 sprite_frames = SubResource("SpriteFrames_cyojo")
 animation = &"hit"
-frame_progress = 0.0781705
 
 [node name="BodyCollider" type="CollisionShape2D" parent="."]
 position = Vector2(30, 60)
@@ -1076,14 +1093,11 @@ collision_mask = 12
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(31, 55)
+position = Vector2(42, 62)
 shape = SubResource("CircleShape2D_1kbk7")
 debug_color = Color(0.741176, 0.435294, 0.454902, 0.203922)
 
 [node name="AttackTimer" type="Timer" parent="."]
-
-[node name="InvulnTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
@@ -1097,15 +1111,52 @@ offset_left = 11.0
 offset_top = 14.0
 offset_right = 86.0
 offset_bottom = 41.0
+theme_override_styles/background = SubResource("StyleBoxFlat_dl1wr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_n7rn1")
 show_percentage = false
 script = ExtResource("3_gqjuk")
 player = NodePath("../..")
 
 [node name="Label" type="Label" parent="CanvasLayer/ProgressBar"]
 layout_mode = 0
-offset_right = 40.0
+offset_right = 74.0
 offset_bottom = 23.0
+
+[node name="ManaBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("player")]
+offset_left = 11.0
+offset_top = 44.0
+offset_right = 86.0
+offset_bottom = 71.0
+theme_override_styles/background = SubResource("StyleBoxFlat_wwtew")
+theme_override_styles/fill = SubResource("StyleBoxFlat_uxo23")
+show_percentage = false
+script = ExtResource("4_dl1wr")
+player = NodePath("../..")
+
+[node name="Label" type="Label" parent="CanvasLayer/ManaBar"]
+offset_right = 67.0
+offset_bottom = 23.0
+
+[node name="FirstAttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_uiqp4")
+bus = &"SFX"
+
+[node name="Combo3Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_hvfru")
+bus = &"SFX"
+
+[node name="FullComboSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_a06cl")
+bus = &"SFX"
+
+[node name="SpecialAttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_c4h5g")
+bus = &"SFX"
+
+[node name="ManaRegenTimer" type="Timer" parent="."]
+process_mode = 1
+autostart = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]
-[connection signal="timeout" from="InvulnTimer" to="." method="_on_invuln_timer_timeout"]
+[connection signal="timeout" from="ManaRegenTimer" to="." method="_on_mana_regen_timer_timeout"]

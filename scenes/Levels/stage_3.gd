@@ -9,8 +9,18 @@ var player_near_door = false
 @onready var door_sprite = $door/AnimatedSprite2D
 @onready var player = $Player
 @onready var mission_display = $MissionDisplay  # ← Asegúrate que existe
+@onready var key_sound := $KeySound
+
+@onready var music_player = $MusicPlayer  # 👈 Asegúrate que el nodo se llame así
 
 func _ready():
+	if not PauseMenu.get_parent():
+		get_tree().get_root().add_child(PauseMenu)
+		PauseMenu.visible = false  # 🔒 Comienza oculto
+	if music_player and not music_player.playing:
+		music_player.play()
+		music_player.stream_paused = false
+		print("🎶 Música iniciada")
 	# Animaciones iniciales
 	door_sprite.play("closed")
 	key_sprite.play("default")
@@ -51,4 +61,6 @@ func _on_key_body_entered(body: Node2D) -> void:
 		has_key = true
 		PlayerData.has_key_stage3 = true  # ✅ Guardar en variable persistente
 		key_area.queue_free()
+		if key_sound:
+			key_sound.play()
 		print("Llave recogida")

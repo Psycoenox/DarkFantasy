@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bou33kce8bpy4"]
+[gd_scene load_steps=26 format=3 uid="uid://bou33kce8bpy4"]
 
 [ext_resource type="PackedScene" uid="uid://bcgb40psg51ir" path="res://scenes/tombstone.tscn" id="1_koi0e"]
 [ext_resource type="Script" uid="uid://dlirrb641j0gg" path="res://scenes/Levels/stage_2.gd" id="1_sowao"]
@@ -12,13 +12,14 @@
 [ext_resource type="Texture2D" uid="uid://cejvlk1oewql5" path="res://Backgrounds/Backgrounds02Stage/Background/kanu-removebg-preview.png" id="9_02ks5"]
 [ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="10_o0dsl"]
 [ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="11_gae7b"]
-[ext_resource type="PackedScene" uid="uid://dq4wxpo2kqvgn" path="res://scenes/Player/boss.tscn" id="12_uvqyt"]
 [ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="13_t4yto"]
 [ext_resource type="PackedScene" uid="uid://ch8q4bu0hxubp" path="res://scenes/Enemy/spike_trap.tscn" id="14_lqcwt"]
 [ext_resource type="Texture2D" uid="uid://qrbno1vavyvr" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/ae8017c6-a36e-4b15-86fb-6f0aa5da9bb6.png" id="15_1r1vw"]
 [ext_resource type="PackedScene" uid="uid://d0pu0tqap3mrk" path="res://scenes/Items/Chest/chest.tscn" id="16_l3ew6"]
 [ext_resource type="PackedScene" uid="uid://bkol6ounf2wew" path="res://scenes/Levels/Missions/mission_display_enemigos.tscn" id="18_yf7od"]
 [ext_resource type="Script" uid="uid://dg4o08xo2tbvy" path="res://scenes/Levels/Missions/MissionDisplayEnemigos.gd" id="19_yf7od"]
+[ext_resource type="AudioStream" uid="uid://br6412gfkki00" path="res://scenes/Levels/audio/Stage2.mp3" id="20_ouq7j"]
+[ext_resource type="PackedScene" uid="uid://b06ljcwv2l3h8" path="res://scenes/options_menu.tscn" id="21_fun6o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_h31wl"]
 texture = ExtResource("5_yf7od")
@@ -1758,16 +1759,15 @@ texture = ExtResource("9_02ks5")
 position = Vector2(2036, 885)
 
 [node name="Player" parent="." instance=ExtResource("10_o0dsl")]
-position = Vector2(1194, 400)
+position = Vector2(21, 369)
 
 [node name="Wizard2" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1170, 875)
+attack_cooldown = 3.0
 
 [node name="Wizard" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1527, 430)
-
-[node name="Boss3" parent="." instance=ExtResource("12_uvqyt")]
-position = Vector2(1858, 449)
+attack_cooldown = 3.0
 
 [node name="Bringer" parent="." instance=ExtResource("13_t4yto")]
 position = Vector2(2062, 477)
@@ -1794,3 +1794,11 @@ texture = ExtResource("15_1r1vw")
 
 [node name="MissionDisplayEnemigos" parent="." instance=ExtResource("18_yf7od")]
 script = ExtResource("19_yf7od")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_ouq7j")
+bus = &"Music"
+parameters/looping = true
+
+[node name="OptionsMenu" parent="." instance=ExtResource("21_fun6o")]
+visible = false

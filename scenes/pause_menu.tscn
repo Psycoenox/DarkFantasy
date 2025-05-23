@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsr7b8aejps5"]
+
+[ext_resource type="Script" uid="uid://du7r4bicp8kio" path="res://scenes/PauseMenu.gd" id="1_n87rw"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_n87rw")
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 0
+offset_left = 505.0
+offset_top = 278.0
+offset_right = 571.0
+offset_bottom = 338.0
+
+[node name="ResumeButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Reanudar"
+
+[node name="OptionsButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Opciones"
+
+[node name="RestartButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="MainMenuButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Salir al menú"

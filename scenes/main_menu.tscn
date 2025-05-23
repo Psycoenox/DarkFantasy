@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cdctq5m41q1fs"]
+[gd_scene load_steps=7 format=3 uid="uid://cdctq5m41q1fs"]
 
 [ext_resource type="Script" uid="uid://decgki4xba6jn" path="res://scenes/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="Texture2D" uid="uid://4s3jv4m2og1p" path="res://Backgrounds/MainMenu/30d3ce3e-b57d-48d3-9298-183e30ae0765.png" id="2_bqqt6"]
 [ext_resource type="FontFile" uid="uid://dg0r35sbao4qk" path="res://Backgrounds/Fonts/04B_30__.TTF" id="2_ekxnf"]
+[ext_resource type="AudioStream" uid="uid://by6746dj25b0e" path="res://scenes/Levels/audio/mainmenu.mp3" id="4_wu84c"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu84c"]
 texture = ExtResource("2_bqqt6")
@@ -81,3 +82,8 @@ text = "Opciones"
 layout_mode = 2
 size_flags_vertical = 3
 text = "Salir"
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_wu84c")
+bus = &"Music"
+parameters/looping = true

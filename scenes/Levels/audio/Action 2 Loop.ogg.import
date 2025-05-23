@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cu43ctkq371md"
+path="res://.godot/imported/Action 2 Loop.ogg-5d1b956b1263746d75e8f996c9a6b1f4.oggvorbisstr"
+
+[deps]
+
+source_file="res://scenes/Levels/audio/Action 2 Loop.ogg"
+dest_files=["res://.godot/imported/Action 2 Loop.ogg-5d1b956b1263746d75e8f996c9a6b1f4.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
