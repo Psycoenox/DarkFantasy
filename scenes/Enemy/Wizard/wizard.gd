@@ -9,16 +9,16 @@ extends CharacterBody2D
 @export var health := 160
 @export var damage := 30
 @export var coin_scene: PackedScene
+@export var attack_area_offset := Vector2(40, 0)  # <- posición base del área de ataque
 
+var is_dead := false
 var patrol_index := 0
 var player: Node2D = null
 var state := "patrol"
 var can_attack := true
 var attack_animations := ["attack_1", "attack_2"]
-var has_hit := false
 var pending_attack := false
 
-# ✅ NUEVO: control de daño por frame
 var frame_damage_data = {
 	"attack_1": [3, 4, 5],
 	"attack_2": [4, 5, 6]
@@ -39,10 +39,12 @@ func _ready():
 	sprite.connect("animation_finished", _on_animation_animation_finished)
 	attack_area.monitoring = true
 	sprite.play("idle")
+	update_attack_area_direction()  # aplicar dirección desde el inicio
 
 func _physics_process(delta):
+	# print("Vida actual: ", health)
+
 	if state == "dead":
-		velocity.x = 0
 		velocity.y += gravity * delta
 		velocity.y = clamp(velocity.y, -9999, max_fall_speed)
 		move_and_slide()
@@ -75,16 +77,18 @@ func _process(_delta):
 						print("💥 Daño aplicado en frame:", current_frame)
 
 func patrol_behavior():
+	if is_dead:
+		return
 	if patrol_points.is_empty():
 		velocity.x = 0
-		if sprite.animation not in ["run", "idle"]:
-			sprite.play("run")
+		sprite.play("idle")
 		return
 
 	var target = patrol_points[patrol_index]
 	var direction = (target - global_position).normalized()
 	velocity.x = direction.x * speed
 	sprite.flip_h = velocity.x < 0
+	update_attack_area_direction()
 
 	if sprite.animation != "run":
 		sprite.play("run")
@@ -93,25 +97,32 @@ func patrol_behavior():
 		patrol_index = (patrol_index + 1) % patrol_points.size()
 
 func chase_behavior():
+	if is_dead or not player:
+		state = "patrol"
+		return
 	if not player:
 		state = "patrol"
 		return
+
+	var direction = (player.global_position - global_position).normalized()
+	velocity.x = direction.x * speed
+	sprite.flip_h = direction.x < 0
+	update_attack_area_direction()
 
 	if attack_area.get_overlapping_bodies().has(player):
 		if can_attack:
 			attack()
 		else:
 			velocity.x = 0
-			if sprite.animation != "idle":
-				sprite.play("idle")
-		return
+			sprite.play("idle")
+	else:
+		if sprite.animation != "run":
+			sprite.play("run")
 
-	var direction = (player.global_position - global_position).normalized()
-	velocity.x = direction.x * speed
-	sprite.flip_h = velocity.x < 0
-
-	if sprite.animation != "run":
-		sprite.play("run")
+func update_attack_area_direction():
+	var offset = attack_area_offset
+	offset.x = -abs(offset.x) if sprite.flip_h else abs(offset.x)
+	attack_area.position = offset
 
 func attack():
 	if state == "dead":
@@ -119,22 +130,18 @@ func attack():
 
 	var distance = global_position.distance_to(player.global_position)
 	if distance > attack_range:
-		print("🚫 Jugador fuera de rango, cancelar ataque")
 		state = "chase"
 		return
 
-	print("⚔️ Ataque del mago ejecutado")
 	state = "attacking"
 	velocity = Vector2.ZERO
 	can_attack = false
-	has_hit = false
 	damaged_in_frame.clear()
 
 	var chosen_attack = attack_animations[randi() % attack_animations.size()]
 	sprite.play(chosen_attack)
 	attack_timer.start(attack_cooldown)
 
-	# ✅ Reproducir sonido de ataque
 	if has_node("AttackSound"):
 		$AttackSound.play()
 
@@ -143,67 +150,70 @@ func take_damage(amount := 1):
 		return
 
 	health = max(health - amount, 0)
-	print("🧙 El enemigo recibió ", amount, " de daño. Salud restante: ", health)
-
 	if health == 0:
 		die()
-		return
-
-	state = "hit"
-	sprite.play("hit")
-
-	if can_attack:
-		pending_attack = true
+	else:
+		state = "hit"
+		sprite.play("hit")
+		if can_attack:
+			pending_attack = true
 
 func die():
+	if is_dead:
+		return
+	is_dead = true  # Marcar como muerto
+
 	state = "dead"
 	velocity = Vector2.ZERO
 	attack_area.monitoring = false
 	area.monitoring = false
 	attack_timer.stop()
-	sprite.play("death")
-	print("☠️ El enemigo ha muerto.")
+	sprite.play("death")  # Reproducir animación de muerte
 
 	if coin_scene:
-		var coin = coin_scene.instantiate()
-		get_parent().add_child(coin)
-		coin.global_position = global_position
-		print("💰 Moneda generada en posición: ", coin.global_position)
-	else:
-		print("⚠️ coin_scene no asignado")
+		for i in range(10):
+			var coin = coin_scene.instantiate()
+			get_parent().add_child(coin)
+		
+		# Posición aleatoria cerca del enemigo
+			var offset = Vector2(
+				randf_range(-10, 10),  # horizontal
+				randf_range(-5, 5)     # vertical
+		)
+			coin.global_position = global_position + offset
+
 
 	var stage = get_tree().get_current_scene()
 	if stage and stage.has_method("registrar_enemigo_derrotado"):
 		stage.registrar_enemigo_derrotado()
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if state == "dead":
-		return
 
+func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
 		player = body
 		state = "chase"
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
-	if state == "dead":
-		return
-
 	if body == player:
 		player = null
 		state = "patrol"
 
 func _on_attack_timer_timeout() -> void:
-	print("⏱️ Cooldown terminado")
 	can_attack = true
-
-	if state != "dead" and state != "attacking" and state != "hit":
+	if state not in ["dead", "attacking", "hit"]:
 		state = "chase"
 
 func _on_animation_animation_finished():
-	print("🌀 Animación terminada:", sprite.animation, " | Estado:", state)
+	if sprite.animation == "death" and is_dead:
+		print("☠️ Animación de muerte finalizada. Liberando nodo.")
+		queue_free()  # Liberar el nodo después de la animación de muerte
+		return
+
+	if is_dead:
+		return  # Impide que se ejecute código adicional si el enemigo está muerto
 
 	if sprite.animation in attack_animations and state == "attacking":
-		damaged_in_frame.clear()  # ✅ limpiar después de ataque
+		damaged_in_frame.clear()
 		state = "chase"
 	elif sprite.animation == "hit":
 		if pending_attack and can_attack:
@@ -211,6 +221,3 @@ func _on_animation_animation_finished():
 			attack()
 		else:
 			state = "chase"
-	elif sprite.animation == "death":
-		print("☠️ Animación de muerte terminada")
-		queue_free()

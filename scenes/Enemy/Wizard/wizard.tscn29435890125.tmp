@@ -390,7 +390,7 @@ height = 52.0
 radius = 170.423
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5d7o8"]
-radius = 46.0435
+radius = 69.029
 
 [node name="Wizard" type="CharacterBody2D"]
 collision_layer = 8
@@ -423,7 +423,7 @@ collision_layer = 8
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(-4, 39)
+position = Vector2(-26, 37)
 shape = SubResource("CircleShape2D_5d7o8")
 debug_color = Color(0.74902, 0.317647, 0.835294, 0.0588235)
 

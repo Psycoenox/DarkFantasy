@@ -11,4 +11,5 @@ var has_key_stage3 := false
 var upgrades := {
 	"damage_lvl": 0,
 	"health_lvl": 0
+	
 }

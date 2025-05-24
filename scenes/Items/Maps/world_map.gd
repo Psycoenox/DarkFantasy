@@ -31,10 +31,16 @@ func _ready():
 	button_zona4.pressed.connect(func(): _ir_a_zona("zona4"))
 
 func update_buttons():
-	button_zona1.disabled = false
-	button_zona2.disabled = !GameManager.desbloquear_zona("2")
-	button_zona3.disabled = !GameManager.desbloquear_zona("3")
-	button_zona4.disabled = !GameManager.desbloquear_zona("4")
+	_update_boton_texto(button_zona1, "Zona 1", GameManager.desbloquear_zona("1"))
+	_update_boton_texto(button_zona2, "Zona 2", GameManager.desbloquear_zona("2"))
+	_update_boton_texto(button_zona3, "Zona 3", GameManager.desbloquear_zona("3"))
+	_update_boton_texto(button_zona4, "Zona Final", GameManager.desbloquear_zona("4"))
+
+func _update_boton_texto(button: Button, nombre: String, desbloqueado: bool):
+	if desbloqueado:
+		button.text = nombre
+	else:
+		button.text = nombre + " (Bloqueado)"
 
 func _input(event):
 	if event.is_action_pressed("open_map"):
@@ -42,12 +48,29 @@ func _input(event):
 		if visible:
 			update_buttons()
 
+func _show_bloqueado_popup():
+	var dialog_scene = preload("res://scenes/dialog_popup.tscn")
+	var dialog = dialog_scene.instantiate()
+	get_tree().get_root().add_child(dialog)
+	
+	dialog.set_text_array(["🚫 No tienes acceso todavía a esta región."], 3.0)
+
+
+
 func _ir_a_zona(zona: String) -> void:
+	print("🧭 Intentando ir a:", zona)
+	if not GameManager.desbloquear_zona(zona.substr(4, 1)):  # zona1 -> "1"
+		_show_bloqueado_popup()
+		return
+
 	if STAGE_PATHS.has(zona):
-		# Guarda los datos del jugador antes de cambiar de nivel
+		visible = false
+		emit_signal("mapa_cerrado")
+
 		var current_scene = get_tree().get_current_scene()
-		var player = current_scene.get_node_or_null("Player")  # Ajusta si tu Player está en otro nodo
+		var player = current_scene.get_node_or_null("Player")
 		if player and player.has_method("save_player_data"):
 			player.save_player_data()
 
+		await get_tree().create_timer(0.2).timeout  # pequeño delay opcional
 		get_tree().change_scene_to_file(STAGE_PATHS[zona])

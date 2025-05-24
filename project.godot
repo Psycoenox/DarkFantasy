@@ -21,6 +21,10 @@ GameManager="*res://scripts/GameManager.gd"
 PlayerData="*res://scripts/PlayerData.gd"
 PauseMenu="*res://scenes/pause_menu.tscn"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 move_left={

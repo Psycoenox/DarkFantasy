@@ -1693,16 +1693,19 @@ script = ExtResource("1_sowao")
 
 [node name="Tombstone" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(110, 489)
-messages = ["Una tumba sin nombre...", "Tal vez de un héroe olvidado.", "Que podria ser?"]
+messages = ["Una tumba sin nombre...", "Tal vez de un héroe olvidado.", "Tengo que ponerle fin a esto...."]
 
 [node name="Tombstone2" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(155, 488)
+messages = ["Intentare darle el mensaje a tu familia... ", "Si es que siguen vivos..."]
 
 [node name="Tombstone3" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(205, 489)
+messages = ["Inocentes..", "..."]
 
 [node name="Tombstone4" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(249, 489)
+messages = ["Recuerda..", "Nuestros ojos son nuetros mayores enemigos "]
 
 [node name="Cartel" parent="." instance=ExtResource("1_koi0e")]
 position = Vector2(1346, 920)
@@ -1730,14 +1733,13 @@ texture = ExtResource("3_0gs5p")
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_mirroring = Vector2(1152, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-position = Vector2(577, 399)
-scale = Vector2(6, 2.53073)
-texture = ExtResource("4_sowao")
-
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
 position = Vector2(576, 420.5)
 scale = Vector2(6, 2.53073)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2/Sprite2D2"]
+position = Vector2(0.166672, -8.49557)
+texture = ExtResource("4_sowao")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_dxxu8")
@@ -1759,15 +1761,19 @@ texture = ExtResource("9_02ks5")
 position = Vector2(2036, 885)
 
 [node name="Player" parent="." instance=ExtResource("10_o0dsl")]
-position = Vector2(21, 369)
+position = Vector2(24, 337)
 
 [node name="Wizard2" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1170, 875)
 attack_cooldown = 3.0
 
+[node name="Wizard3" parent="." instance=ExtResource("11_gae7b")]
+position = Vector2(772, 359)
+attack_cooldown = 4.5
+
 [node name="Wizard" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1527, 430)
-attack_cooldown = 3.0
+attack_cooldown = 4.5
 
 [node name="Bringer" parent="." instance=ExtResource("13_t4yto")]
 position = Vector2(2062, 477)

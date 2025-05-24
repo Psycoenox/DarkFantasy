@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bssudk0en443t" path="res://scenes/Items/Maps/mapa.png" id="2_ej2pd"]
 
 [node name="WorldMap" type="CanvasLayer"]
+layer = 0
 script = ExtResource("1_2pxu8")
 
 [node name="TextureRect" type="TextureRect" parent="."]
@@ -16,10 +17,9 @@ expand_mode = 1
 modulate = Color(1, 1, 1, 0)
 self_modulate = Color(1, 1, 1, 0)
 offset_left = 88.0
-offset_top = 62.0
+offset_top = 34.0
 offset_right = 522.0
 offset_bottom = 251.0
-disabled = true
 
 [node name="ButtonZona2" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -27,7 +27,6 @@ offset_left = 587.0
 offset_top = 50.0
 offset_right = 1046.0
 offset_bottom = 271.0
-disabled = true
 
 [node name="ButtonZona3" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
@@ -37,7 +36,6 @@ offset_top = 294.0
 offset_right = 548.0
 offset_bottom = 506.0
 tooltip_text = "D"
-disabled = true
 
 [node name="ButtonZona4" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
@@ -45,4 +43,3 @@ offset_left = 675.0
 offset_top = 308.0
 offset_right = 1112.0
 offset_bottom = 512.0
-disabled = true

@@ -20,11 +20,17 @@ func _ready():
 
 func _input(event):
 	if event.is_action_pressed("pause_menu"):
+		# 🔒 Si el menú de opciones está abierto, no hacer nada
+		if options_instance and options_instance.visible:
+			print("🚫 ESC ignorado: opciones abiertas")
+			return
+
 		print("🟨 ESC detectado")
 		if visible:
 			_on_resume_pressed()
 		else:
 			toggle()
+
 
 func toggle():
 	visible = not visible

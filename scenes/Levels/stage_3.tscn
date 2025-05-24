@@ -913,7 +913,7 @@ scale = Vector2(1.53516, 0.844727)
 texture = ExtResource("3_da0dx")
 
 [node name="Player" parent="." instance=ExtResource("4_a2ih4")]
-position = Vector2(146, 402)
+position = Vector2(100, 326)
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(-730, -311)
@@ -969,6 +969,7 @@ bus = &"SFX"
 
 [node name="WizardBoss" parent="." instance=ExtResource("8_gqmxp")]
 position = Vector2(3414, 504)
+health = 200
 
 [node name="Worm" parent="." instance=ExtResource("9_b7plg")]
 position = Vector2(1297, 516)
@@ -979,6 +980,10 @@ position = Vector2(959, 249)
 [node name="Chest" parent="." instance=ExtResource("11_v7w0g")]
 position = Vector2(398, 197)
 scale = Vector2(-1.08325, 1.07897)
+
+[node name="Chest2" parent="." instance=ExtResource("11_v7w0g")]
+position = Vector2(4605, 505)
+scale = Vector2(1.43869, 1.40207)
 
 [node name="SpikeTrap" parent="." instance=ExtResource("14_jsond")]
 position = Vector2(1965, 550)
@@ -996,6 +1001,7 @@ position = Vector2(2025, 550)
 position = Vector2(2005, 550)
 
 [node name="MissionDisplay" parent="." instance=ExtResource("15_365fc")]
+layer = 0
 script = ExtResource("16_gqmxp")
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]

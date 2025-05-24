@@ -9,14 +9,18 @@ extends CharacterBody2D
 @export var attack_cooldown := 1.0
 
 @export var health_bar_path: NodePath
+
+@onready var detection_area: Area2D = $DetectionArea
 @onready var boss_health_bar: TextureProgressBar = get_node(health_bar_path)
 @onready var anim_sprite := $AnimatedSprite2D
 @onready var boss_breath: AudioStreamPlayer2D = $BossBreath
+@onready var credits_scene := preload("res://scenes/Credits.tscn")
 
 
 var health := max_health
 var current_hits := 0
 var is_stunned := false
+var is_dead := false
 var is_attacking := false
 var can_attack := true
 var target: Node2D = null
@@ -28,6 +32,9 @@ var ya_golpeado_en_frame := {}
 var dano_por_golpe := 10  # Nuevo: configurable por ataque
 
 func _ready():
+	$DetectionArea.body_entered.connect(_on_detection_area_body_entered)
+	$DetectionArea.body_exited.connect(_on_detection_area_body_exited)
+
 	rng.randomize()
 	anim_sprite.play("idle")
 
@@ -38,6 +45,13 @@ func _ready():
 		print("❌ No se encontró la barra de vida (HealthBar)")
 
 func _physics_process(delta):
+	# Buscar jugador dentro de DetectionArea si no hay target asignado
+	if detection_area:
+		for body in detection_area.get_overlapping_bodies():
+			if body.is_in_group("player"):
+				target = body
+				break
+
 	if not is_on_floor():
 		velocity.y += gravity * delta
 	else:
@@ -48,10 +62,11 @@ func _physics_process(delta):
 	else:
 		if target:
 			var distance = global_position.distance_to(target.global_position)
+			var direction = sign(target.global_position.x - global_position.x)
+			anim_sprite.flip_h = direction > 0  # ↔️ Mira hacia el jugador
+
 			if distance > attack_range:
-				var direction = sign(target.global_position.x - global_position.x)
 				velocity.x = direction * speed
-				anim_sprite.flip_h = direction > 0
 				anim_sprite.play("walk")
 			else:
 				velocity.x = 0
@@ -63,7 +78,14 @@ func _physics_process(delta):
 
 	move_and_slide()
 
+
 func _process(delta):
+	if detection_area:
+		var bodies = detection_area.get_overlapping_bodies()
+		for body in bodies:
+			if body.is_in_group("player"):
+				target = body  # Asignar constantemente como target
+				break
 	# Reproducir sonido en frame 7 de la animación idle
 	if anim_sprite.animation == "idle" and anim_sprite.frame == 7:
 		if not boss_breath.playing:
@@ -88,6 +110,8 @@ func preparar_danio(animacion: String, frames: Array[int], dano: int = 10):
 	dano_por_golpe = dano
 
 func take_damage(amount: int):
+	if is_dead:
+		return
 	if is_stunned or anim_sprite.animation == "Death":
 		return
 
@@ -121,6 +145,10 @@ func should_block() -> bool:
 	return rng.randi_range(0, 100) < 70
 
 func die():
+	if is_dead:
+		return
+	is_dead = true
+
 	anim_sprite.play("Death")
 	set_physics_process(false)
 	$CollisionShape2D.disabled = true
@@ -129,6 +157,16 @@ func die():
 		boss_health_bar.hide()
 
 	await anim_sprite.animation_finished
+
+	await get_tree().create_timer(2.0).timeout
+
+	var credits = credits_scene.instantiate()
+	get_tree().get_root().add_child(credits)
+
+	queue_free()
+
+
+
 
 func attack_combo():
 	can_attack = false
@@ -182,12 +220,23 @@ func try_hit_player():
 	else:
 		print("Jugador fuera de rango")
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("Jugador detectado:", body.name)
 		target = body
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
+func _on_attack_area_body_exited(body: Node2D) -> void:
 	if body == target:
 		print("Jugador salió del área")
 		target = null
+
+
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		target = body
+		print("🎯 Jugador detectado por DetectionArea")
+
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	if body == target:
+		target = null
+		print("👁️ Jugador salió del DetectionArea")

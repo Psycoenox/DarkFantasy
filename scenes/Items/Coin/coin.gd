@@ -29,8 +29,18 @@ func _physics_process(delta):
 		_collect()
 
 func attract_to_player(player):
-	is_being_attracted = true
-	player_node = player
+	position = position.move_toward(player.position, 10.0)
+
+
+	if position.distance_to(player.position) < 10:
+		player.coins += 1
+
+		# Si el HUD está dentro del jugador:
+		if player.has_node("CanvasLayer"):
+			player.get_node("CanvasLayer").actualizar_monedas(player.coins)
+
+		queue_free()
+
 
 func _collect():
 	if player_node and player_node.has_method("collect_coin"):

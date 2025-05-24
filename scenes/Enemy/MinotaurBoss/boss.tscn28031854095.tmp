@@ -824,6 +824,14 @@ position = Vector2(267, 143)
 scale = Vector2(1.86045, 1.78766)
 collision_layer = 4
 script = ExtResource("1_vp0m2")
+speed = null
+gravity = null
+max_health = null
+armor_hits = null
+stun_duration = null
+attack_range = null
+attack_cooldown = null
+health_bar_path = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-1.075, -1.11878)

@@ -5,11 +5,18 @@ extends CanvasLayer
 
 var messages: Array = []
 var index: int = 0
+var auto_close_time := 0.0
 
-func set_text_array(new_messages: Array) -> void:
+func set_text_array(new_messages: Array, close_after: float = 3.0) -> void:
 	messages = new_messages
 	index = 0
+	auto_close_time = close_after
 	_show_current()
+
+	if auto_close_time > 0:
+		await get_tree().create_timer(auto_close_time).timeout
+		if is_inside_tree():
+			queue_free()
 
 func advance_text():
 	index += 1

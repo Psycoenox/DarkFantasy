@@ -4,6 +4,8 @@ extends CharacterBody2D
 signal takedamage
 signal stats_updated # señal para daño o vida
 signal mana_changed
+signal monedas_actualizadas(cantidad: int)
+
 
 @export var speed := 120
 @export var jump_force := -400
@@ -22,7 +24,7 @@ signal mana_changed
 
 var is_attacking := false
 var mana := max_mana
-var coins := 999
+var coins := 100
 var is_blocking := false
 var is_special_attacking := false
 var is_rolling := false
@@ -60,6 +62,7 @@ var attack_offset_x: float
 @onready var special_attack_sound := $SpecialAttackSound
 @onready var world_map_scene := preload("res://scenes/Items/Maps/world_map.tscn")
 func _ready():
+	
 	add_to_group("player")
 	$ManaRegenTimer.timeout.connect(_on_mana_regen_timer_timeout)
 
@@ -78,6 +81,8 @@ func _ready():
 	
 	print("🧪 Vida final tras aplicar upgrades: %d / %d" % [health, max_health])
 	attack_offset_x = attack_area.position.x
+	$CanvasLayer.setear_player(self)
+
 
 
 
@@ -87,7 +92,7 @@ func _physics_process(delta):
 	if not can_move:
 		return
 
-	# 🪙 Atracción de monedasmmmmmmammdadmamdmamdm
+	# 🪙 Atracción de monedas
 	if Input.is_action_pressed("interact"):
 		var coins = get_tree().get_nodes_in_group("coins")
 		for coin in coins:
@@ -215,6 +220,9 @@ func set_can_move(value: bool) -> void:
 		velocity = Vector2.ZERO
 		sprite.play("idle")
 
+
+
+
 func recover_mana(amount: int):
 	mana += amount
 	mana = min(mana, max_mana)
@@ -325,6 +333,9 @@ func _on_mapa_cerrado():
 func collect_coin(amount:int) -> void:
 	coins += amount
 	print("Total de monedas: ", coins)
+	PlayerData.coins = coins  # ✅ Actualiza el valor persistente
+	emit_signal("monedas_actualizadas", coins)
+
 	
 func upgrade_health(amount: int):
 	max_health += amount

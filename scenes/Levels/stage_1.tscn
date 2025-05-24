@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cswjuva71j1es"]
+[gd_scene load_steps=20 format=3 uid="uid://cswjuva71j1es"]
 
 [ext_resource type="Script" uid="uid://v1l0nq1but37" path="res://scenes/Levels/stage_1.gd" id="1_wmehx"]
 [ext_resource type="Texture2D" uid="uid://4qk0btb48urh" path="res://Backgrounds/Backgrounds01Stage/background.png" id="2_t37c6"]
@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://1rt2w50fallm" path="res://scenes/Levels/audio/stage1.mp3" id="14_7rhe6"]
 [ext_resource type="PackedScene" uid="uid://bexsik7wfudl7" path="res://scenes/Levels/Missions/mission_display.tscn" id="14_t37c6"]
 [ext_resource type="PackedScene" uid="uid://b06ljcwv2l3h8" path="res://scenes/options_menu.tscn" id="15_7rhe6"]
+[ext_resource type="PackedScene" uid="uid://d0pu0tqap3mrk" path="res://scenes/Items/Chest/chest.tscn" id="15_8coft"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o0vhs"]
 texture = ExtResource("6_uxyby")
@@ -482,7 +483,7 @@ dialogue_lines = ["¡Eh, joven! No es habitual ver caras nuevas por aquí...", "
 position = Vector2(822, 490)
 
 [node name="Player" parent="." instance=ExtResource("9_8m1pn")]
-position = Vector2(71, 409)
+position = Vector2(1816, 273)
 
 [node name="DialogCartel" parent="." instance=ExtResource("10_wu5br")]
 position = Vector2(547, 498)
@@ -491,13 +492,18 @@ messages = ["🌑 El Reino de Eldranor se ha podrido bajo una maldición ancestr
 
 [node name="Worm" parent="." instance=ExtResource("11_wvhtt")]
 position = Vector2(2027, 507)
+health = 100
 
 [node name="MissionDisplay" parent="." instance=ExtResource("14_t37c6")]
+layer = 0
 
 [node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_7rhe6")
 bus = &"Music"
 parameters/looping = true
+
+[node name="Chest" parent="MusicPlayer" instance=ExtResource("15_8coft")]
+position = Vector2(2158, 506)
 
 [node name="OptionsMenu" parent="." instance=ExtResource("15_7rhe6")]
 visible = false

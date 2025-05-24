@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2qr86a67b0w4"]
+
+[ext_resource type="Script" uid="uid://bj8dor2e50n6a" path="res://scenes/credits.gd" id="1_0bpdh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ckv8"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_2ckv8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadePanel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0bpdh"]
+resource_name = "fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FadePanel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0ctdu"]
+_data = {
+&"RESET": SubResource("Animation_2ckv8"),
+&"fade_in": SubResource("Animation_0bpdh")
+}
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_0bpdh")
+
+[node name="FadePanel" type="Panel" parent="."]
+offset_top = 0.5
+offset_right = 1153.0
+offset_bottom = 650.5
+theme_override_styles/panel = SubResource("StyleBoxFlat_2ckv8")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "MUCHAS GRACIAS POR JUGAR
+
+Creado por Marcell González"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_0ctdu")
+}

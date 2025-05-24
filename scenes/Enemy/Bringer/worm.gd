@@ -12,7 +12,6 @@ var max_health := health
 var player: Node2D = null
 var is_attacking := false
 var has_fired := false
-var has_summoned := false
 var is_hurt := false
 var is_dead := false
 
@@ -30,7 +29,8 @@ func _ready():
 func _physics_process(delta):
 	if is_dead:
 		return
-
+	#DEBUG
+	#print("Vida actual: ", health)
 	# ✅ Búsqueda flexible del jugador por grupo
 	if not player:
 		var players = get_tree().get_nodes_in_group("player")
@@ -100,22 +100,23 @@ func _fire_projectile():
 
 func take_damage(amount := 1):
 	if is_dead:
-		return
-	if is_hurt:
+		print("☠️ Ya está muerto, ignorar daño.")
 		return
 
 	health -= amount
-	is_hurt = true
-	sprite.play("hit")
+	print("💢 Daño recibido: ", amount, " | Salud restante: ", health, "/", max_health)
 
 	if health <= 0:
+		print("💀 Vida agotada. Ejecutando muerte.")
 		die()
-	else:
-		await sprite.animation_finished
-		is_hurt = false
+		return
 
-	if not has_summoned and health <= max_health / 2:
-		has_summoned = true
+	# Reproducir animación hit solo si aún no se está reproduciendo
+	if sprite.animation != "hit" and sprite.animation != "death":
+		sprite.play("hit")
+
+
+
 
 func die():
 	var stage = get_tree().get_current_scene()
