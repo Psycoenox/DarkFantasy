@@ -47,6 +47,8 @@ func _input(event):
 		visible = not visible
 		if visible:
 			update_buttons()
+		else:
+			emit_signal("mapa_cerrado")  # ✅ Esto reactiva el movimiento del jugador
 
 func _show_bloqueado_popup():
 	var dialog_scene = preload("res://scenes/dialog_popup.tscn")
