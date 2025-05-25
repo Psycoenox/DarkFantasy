@@ -1,7 +1,7 @@
 [gd_scene load_steps=165 format=3 uid="uid://dpg5tv3rt3op4"]
 
-[ext_resource type="Script" uid="uid://b27qrusdfntst" path="res://player.gd" id="1_cyojo"]
-[ext_resource type="Texture2D" uid="uid://cwddxqvnwsg40" path="res://SpriteSheet/Player/fire_FREE_SpriteSheet_288x128.png" id="2_1kbk7"]
+[ext_resource type="Script" uid="uid://b27qrusdfntst" path="res://scenes/Player/player.gd" id="1_cyojo"]
+[ext_resource type="Texture2D" uid="uid://cwddxqvnwsg40" path="res://scenes/Player/fire_FREE_SpriteSheet_288x128.png" id="2_1kbk7"]
 [ext_resource type="Script" uid="uid://cqvj65p7tqllx" path="res://scenes/Player/progress_bar.gd" id="3_gqjuk"]
 [ext_resource type="Script" uid="uid://ddwlgrmh6k5gq" path="res://scenes/Player/canvas_layer.gd" id="3_uxo23"]
 [ext_resource type="AudioStream" uid="uid://dpcdfuhxstfhy" path="res://scenes/Player/Sound/special.wav" id="4_c4h5g"]

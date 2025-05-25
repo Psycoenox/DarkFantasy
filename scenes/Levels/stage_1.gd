@@ -8,6 +8,21 @@ var npcs_hablados := 0
 const NPCS_REQUERIDOS := 2
 
 func _ready():
+		# Solo si hay datos cargados
+	if SaveSystem.loaded_data != {}:
+		var player = get_tree().get_first_node_in_group("player")
+		if player:
+			var pos = SaveSystem.loaded_data.get("player_position", null)
+			if pos:
+				player.global_position = Vector2(pos["x"], pos["y"])  # Asegúrate de usar un Vector2
+
+			player.health = SaveSystem.loaded_data.get("player_health", player.health)
+			player.max_health = SaveSystem.loaded_data.get("player_max_health", player.max_health)
+			player.coins = SaveSystem.loaded_data.get("coins", player.coins)
+
+		# Limpiar datos para evitar reaplicación si reinicias
+		SaveSystem.loaded_data = {}
+
 	if not PauseMenu.get_parent():
 		get_tree().get_root().add_child(PauseMenu)
 		PauseMenu.visible = false  # 🔒 Comienza oculto

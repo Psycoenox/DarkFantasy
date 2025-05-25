@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dyv7o3nhkbq7h"]
 
-[ext_resource type="Script" uid="uid://bwpiv1wmapyjb" path="res://black_smith_upgrade_menu.gd" id="1_vb3f3"]
+[ext_resource type="Script" uid="uid://bwpiv1wmapyjb" path="res://scenes/black_smith_upgrade_menu.gd" id="1_vb3f3"]
 [ext_resource type="Texture2D" uid="uid://dla5g2vo5tecs" path="res://scenes/NPCs/BlackSmith/68b923e7-e548-46e5-bddb-e550fdae572e.png" id="2_taiab"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_24fk0"]

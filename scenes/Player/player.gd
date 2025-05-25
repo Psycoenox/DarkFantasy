@@ -61,15 +61,32 @@ var attack_offset_x: float
 @onready var full_combo_sound := $FullComboSound
 @onready var special_attack_sound := $SpecialAttackSound
 @onready var world_map_scene := preload("res://scenes/Items/Maps/world_map.tscn")
+
 func _ready():
-	
+	if SaveSystem.loaded_data.has("player_position"):
+		global_position = Vector2(
+			SaveSystem.loaded_data["player_position"]["x"],
+			SaveSystem.loaded_data["player_position"]["y"]
+		)
+	if SaveSystem.loaded_data.has("player_health"):
+		health = SaveSystem.loaded_data["player_health"]
+	if SaveSystem.loaded_data.has("player_max_health"):
+		max_health = SaveSystem.loaded_data["player_max_health"]
+	if SaveSystem.loaded_data.has("coins"):
+		coins = SaveSystem.loaded_data["coins"]
+
+	# ✅ SOLO usar PlayerData si NO estás cargando desde save
+	if SaveSystem.loaded_data.is_empty():
+		max_health = PlayerData.max_health
+		health = PlayerData.health
+		base_attack_damage = PlayerData.attack_damage
+		coins = PlayerData.coins
+
+	# ✅ Aquí ya puedes limpiar
+	SaveSystem.loaded_data.clear()
+
 	add_to_group("player")
 	$ManaRegenTimer.timeout.connect(_on_mana_regen_timer_timeout)
-
-	max_health = PlayerData.max_health
-	health = PlayerData.health
-	base_attack_damage = PlayerData.attack_damage
-	coins = PlayerData.coins
 
 	# 🔒 Solo aplicar upgrades si aún no se aplicaron
 	if not PlayerData.upgrades_applied:

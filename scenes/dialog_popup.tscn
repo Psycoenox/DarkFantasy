@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ck4upt17m60tj"]
 
-[ext_resource type="Script" uid="uid://cf67rd862ol5d" path="res://dialog_popup.gd" id="1_irp3d"]
+[ext_resource type="Script" uid="uid://cf67rd862ol5d" path="res://scenes/dialog_popup.gd" id="1_irp3d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_absye"]
 bg_color = Color(0, 0, 0, 0.380392)

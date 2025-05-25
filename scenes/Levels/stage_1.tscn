@@ -477,13 +477,13 @@ layer_0/tile_data = PackedInt32Array(2097152, 1310721, 8, 2097153, 1376257, 8, 2
 
 [node name="BeardedMan" parent="." instance=ExtResource("7_w0omt")]
 position = Vector2(1133, 496)
-dialogue_lines = ["¡Eh, joven! No es habitual ver caras nuevas por aquí...", "Si vas a internarte en el bosque, más te vale ir bien preparado.", "Dicen que criaturas extrañas han empezado a merodear por las tumbas...", "Yo ya soy viejo para aventuras, pero tú aún puedes hacer algo útil.", "Ve con cuidado. Y si encuentras algo raro, vuelve y dímelo.", "Oye una ultima cosa... recuerda no todo lo que ves es lo que crees"]
+dialogue_lines = ["¡Eh, joven! No es habitual ver caras nuevas por aquí...", "Si vas a internarte en el bosque, más te vale ir bien preparado.", "Dicen que criaturas extrañas han empezado a merodear por las tumbas...", "Yo ya soy viejo para aventuras, pero tú aún puedes hacer algo útil.", "Ve con cuidado. Y si encuentras algo raro, vuelve y dímelo.", " Recuerda no todo lo que ves es lo que crees"]
 
 [node name="BlackSmith" parent="." instance=ExtResource("8_g375e")]
 position = Vector2(822, 490)
 
 [node name="Player" parent="." instance=ExtResource("9_8m1pn")]
-position = Vector2(1816, 273)
+position = Vector2(210, 361)
 
 [node name="DialogCartel" parent="." instance=ExtResource("10_wu5br")]
 position = Vector2(547, 498)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bou33kce8bpy4"]
+[gd_scene load_steps=25 format=3 uid="uid://bou33kce8bpy4"]
 
 [ext_resource type="PackedScene" uid="uid://bcgb40psg51ir" path="res://scenes/tombstone.tscn" id="1_koi0e"]
 [ext_resource type="Script" uid="uid://dlirrb641j0gg" path="res://scenes/Levels/stage_2.gd" id="1_sowao"]
@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://cejvlk1oewql5" path="res://Backgrounds/Backgrounds02Stage/Background/kanu-removebg-preview.png" id="9_02ks5"]
 [ext_resource type="PackedScene" uid="uid://dpg5tv3rt3op4" path="res://scenes/Player/player.tscn" id="10_o0dsl"]
 [ext_resource type="PackedScene" uid="uid://bn5netgeci1m5" path="res://scenes/Enemy/Wizard/wizard.tscn" id="11_gae7b"]
-[ext_resource type="PackedScene" uid="uid://ew186ob06bmb" path="res://scenes/Enemy/Bringer/worm.tscn" id="13_t4yto"]
 [ext_resource type="PackedScene" uid="uid://ch8q4bu0hxubp" path="res://scenes/Enemy/spike_trap.tscn" id="14_lqcwt"]
 [ext_resource type="Texture2D" uid="uid://qrbno1vavyvr" path="res://Backgrounds/Backgrounds02Stage/Background/Castle/ae8017c6-a36e-4b15-86fb-6f0aa5da9bb6.png" id="15_1r1vw"]
 [ext_resource type="PackedScene" uid="uid://d0pu0tqap3mrk" path="res://scenes/Items/Chest/chest.tscn" id="16_l3ew6"]
@@ -1774,9 +1773,6 @@ attack_cooldown = 4.5
 [node name="Wizard" parent="." instance=ExtResource("11_gae7b")]
 position = Vector2(1527, 430)
 attack_cooldown = 4.5
-
-[node name="Bringer" parent="." instance=ExtResource("13_t4yto")]
-position = Vector2(2062, 477)
 
 [node name="SpikeTrap" parent="." instance=ExtResource("14_lqcwt")]
 position = Vector2(571, 516)

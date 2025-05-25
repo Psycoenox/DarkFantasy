@@ -1,25 +1,80 @@
-[gd_scene load_steps=13 format=3 uid="uid://batexh3xe3ytj"]
+[gd_scene load_steps=13 format=3 uid="uid://bq0xdan0t8r4n"]
 
-[ext_resource type="Script" uid="uid://bv5owr5dfd24s" path="res://bonfire.gd" id="1_jev0p"]
-[ext_resource type="Texture2D" uid="uid://cp5axwgjxssvg" path="res://SpriteSheet/Bonfire/Bonfire_1.png" id="2_o0yqv"]
-[ext_resource type="Texture2D" uid="uid://b4h6eprgkcv3g" path="res://SpriteSheet/Bonfire/Bonfire_2.png" id="3_6t6eb"]
-[ext_resource type="Texture2D" uid="uid://dnw0cnxgc1ka0" path="res://SpriteSheet/Bonfire/Bonfire_3.png" id="4_2npm3"]
-[ext_resource type="Texture2D" uid="uid://blv6rq36v6y3j" path="res://SpriteSheet/Bonfire/Bonfire_4.png" id="5_3kp8y"]
+[sub_resource type="GDScript" id="GDScript_8aldm"]
+script/source = "extends CharacterBody2D
+
+@export var gravity := 1000
+@export var max_fall_speed := 500
+
+@onready var sprite = $AnimatedSprite2D
+@onready var interact_area = $InteractArea
+@onready var bonfire_ui_scene = preload(\"res://scenes/bonfire_ui.tscn\")  # Asegúrate que esta ruta sea correcta
+
+var player_ref: Node2D = null
+var bonfire_ui_instance: Node = null
+
+func _ready():
+	sprite.play(\"idle\")
+	interact_area.connect(\"body_entered\", Callable(self, \"_on_body_entered\"))
+	interact_area.connect(\"body_exited\", Callable(self, \"_on_body_exited\"))
+
+func _physics_process(delta):
+	if not is_on_floor():
+		velocity.y += gravity * delta
+	else:
+		velocity.y = 0
+	velocity.y = clamp(velocity.y, -9999, max_fall_speed)
+	move_and_slide()
+
+	if player_ref and Input.is_action_just_pressed(\"interact\"):
+		enter_bonfire()
+
+
+func enter_bonfire():
+	if bonfire_ui_instance == null:
+		bonfire_ui_instance = bonfire_ui_scene.instantiate()
+		bonfire_ui_instance.name = \"BonfireUI\"
+		get_tree().get_root().add_child(bonfire_ui_instance)
+
+		if player_ref:
+			player_ref.set_can_move(false)  # ✅ si defines esto en el Player
+
+
+
+func _on_interact_area_body_entered(body: Node2D) -> void:
+	if body.name == \"Player\":
+		player_ref = body
+func _on_interact_area_body_exited(body: Node2D) -> void:
+	if body.name == \"Player\":
+		player_ref = body
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x8657"]
+load_path = "res://.godot/imported/Bonfire_1.png-bf1580a617aa4dbef6fc1ca1b0fdc68f.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ibo1c"]
-atlas = ExtResource("2_o0yqv")
+atlas = SubResource("CompressedTexture2D_x8657")
 region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4psdg"]
+load_path = "res://.godot/imported/Bonfire_2.png-c2743b5474c1b81311bb1414d21a856c.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_asr7k"]
-atlas = ExtResource("3_6t6eb")
+atlas = SubResource("CompressedTexture2D_4psdg")
 region = Rect2(0, 0, 64, 44)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xk3wp"]
+load_path = "res://.godot/imported/Bonfire_3.png-31a526db81d3bfcaa731e10fe83ab9bd.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g2hny"]
-atlas = ExtResource("4_2npm3")
+atlas = SubResource("CompressedTexture2D_xk3wp")
 region = Rect2(0, 0, 64, 44)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jmhiw"]
+load_path = "res://.godot/imported/Bonfire_4.png-7430d7f18945c6852cf2c0cbffceb16e.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_qy3ud"]
-atlas = ExtResource("5_3kp8y")
+atlas = SubResource("CompressedTexture2D_jmhiw")
 region = Rect2(0, 0, 64, 44)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_movoj"]
@@ -55,7 +110,7 @@ radius = 23.4094
 
 [node name="Bonfire" type="CharacterBody2D"]
 collision_layer = 16
-script = ExtResource("1_jev0p")
+script = SubResource("GDScript_8aldm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(32, 25)

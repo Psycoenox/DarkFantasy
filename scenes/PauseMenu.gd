@@ -4,9 +4,15 @@ extends CanvasLayer
 @onready var restart_btn = $Panel/VBoxContainer/RestartButton
 @onready var main_menu_btn = $Panel/VBoxContainer/MainMenuButton
 @onready var options_btn = $Panel/VBoxContainer/OptionsButton  # Asegúrate de tener este nodo
-
+@onready var save_btn = $Panel/VBoxContainer/SaveButton
+@onready var save_menu_scene := preload("res://scenes/save_menu.tscn")
 @onready var options_scene := preload("res://scenes/options_menu.tscn")
+
 var options_instance: Node = null
+var save_menu_instance: Node = null
+var enabled := false
+
+
 
 func _ready():
 	print("🟢 PauseMenu _ready ejecutado")
@@ -17,8 +23,12 @@ func _ready():
 	restart_btn.pressed.connect(_on_restart_pressed)
 	main_menu_btn.pressed.connect(_on_main_menu_pressed)
 	options_btn.pressed.connect(_on_options_pressed)
+	save_btn.pressed.connect(_on_save_pressed)
+
 
 func _input(event):
+	if not enabled:
+		return
 	if event.is_action_pressed("pause_menu"):
 		# 🔒 Si el menú de opciones está abierto, no hacer nada
 		if options_instance and options_instance.visible:
@@ -67,4 +77,19 @@ func _on_options_pressed():
 
 func _on_options_closed():
 	print("🔙 Cerrado menú de opciones, volver a mostrar pausa")
+	visible = true
+	
+func _on_save_pressed():
+	print("💾 Guardar Partida")
+	if not save_menu_instance:
+		save_menu_instance = save_menu_scene.instantiate()
+		add_child(save_menu_instance)
+		save_menu_instance.connect("cerrar_menu_guardado", Callable(self, "_on_save_menu_closed"))
+	else:
+		save_menu_instance.visible = true
+
+	visible = false  # Oculta menú de pausa
+
+func _on_save_menu_closed():
+	print("🔙 Cerrar menú guardado, volver a pausa")
 	visible = true

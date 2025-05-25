@@ -1,25 +1,58 @@
-[gd_scene load_steps=11 format=3 uid="uid://b4fuqqaj0a5gr"]
+[gd_scene load_steps=11 format=3 uid="uid://bfn6r7x14wary"]
 
-[ext_resource type="Script" uid="uid://tawqncedsi61" path="res://scenes/bonfire_ui.gd" id="1_lmmno"]
-[ext_resource type="Texture2D" uid="uid://05bpm2vkpufa" path="res://SpriteSheet/Bonfire/tile000.png" id="2_rwmal"]
-[ext_resource type="Texture2D" uid="uid://dwt58bl7qpgmf" path="res://SpriteSheet/Bonfire/tile001.png" id="3_ewg4e"]
-[ext_resource type="Texture2D" uid="uid://cfyjh3lvkkin1" path="res://SpriteSheet/Bonfire/tile002.png" id="4_fo0nk"]
-[ext_resource type="Texture2D" uid="uid://34chay1ubg6q" path="res://SpriteSheet/Bonfire/tile003.png" id="5_ogqk1"]
+[sub_resource type="GDScript" id="GDScript_mi08y"]
+script/source = "extends CanvasLayer
+
+@onready var sprite = $AnimatedSprite2D
+@onready var boton_salir := $Salir
+@onready var boton_mejorar := $Mejorar
+@onready var boton_descansar := $Descansar
+
+var ready_to_click := false  # 👈 Añadimos esta variable
+
+func _ready():
+	sprite.play(\"idle\")
+	await get_tree().create_timer(0.2).timeout  # espera 0.2 segundos
+	boton_salir.grab_focus()
+	ready_to_click = true  # ✅ solo después de 0.2s permitimos click
+
+func _on_salir_pressed() -> void:
+	if not ready_to_click:
+		return  # ❌ ignora clicks que vengan demasiado pronto
+
+	var player = get_tree().get_root().get_node(\"Stage1/Player\")
+	if player:
+		player.set_can_move(true)
+
+	queue_free()
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_6jhem"]
+load_path = "res://.godot/imported/tile000.png-62ad5c2be2dd5ca25d2783d1149fe57d.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qujoo"]
-atlas = ExtResource("2_rwmal")
+atlas = SubResource("CompressedTexture2D_6jhem")
 region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lmmno"]
+load_path = "res://.godot/imported/tile001.png-d0b15e175d63ad1d2a7fea7d42cdad11.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ktij"]
-atlas = ExtResource("3_ewg4e")
+atlas = SubResource("CompressedTexture2D_lmmno")
 region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_eydlq"]
+load_path = "res://.godot/imported/tile002.png-4426e9df462a9cbf0c1457948e01b754.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c04p7"]
-atlas = ExtResource("4_fo0nk")
+atlas = SubResource("CompressedTexture2D_eydlq")
 region = Rect2(0, 0, 400, 400)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_4n2yi"]
+load_path = "res://.godot/imported/tile003.png-1938aa85bfb9b711de88e844564d78c6.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_0pooy"]
-atlas = ExtResource("5_ogqk1")
+atlas = SubResource("CompressedTexture2D_4n2yi")
 region = Rect2(0, 0, 400, 400)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eo1tp"]
@@ -48,7 +81,7 @@ animations = [{
 }]
 
 [node name="BonfireUI" type="CanvasLayer"]
-script = ExtResource("1_lmmno")
+script = SubResource("GDScript_mi08y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(578, 324)

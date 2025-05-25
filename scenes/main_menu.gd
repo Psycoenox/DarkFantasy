@@ -5,7 +5,8 @@ extends Control
 @onready var opciones_button = $VBoxContainer/Opciones
 @onready var salir_button = $VBoxContainer/Salir
 @onready var music_player = $MusicPlayer  # 👈 Asegúrate que el nodo se llame así
-@onready var options_scene := preload("res://scenes/options_menu.tscn")  # ajusta la ruta
+
+@onready var options_scene := preload("res://scenes/options_menu.tscn") 
 var options_instance: Node = null
 
 func _ready():
@@ -14,7 +15,6 @@ func _ready():
 		music_player.stream_paused = false
 		print("🎶 Música iniciada")
 	# Desactiva el botón de cargar por defecto (hasta implementar el guardado)
-	cargar_button.disabled = true
 
 	# Conectar señales de los botones
 	jugar_button.pressed.connect(_on_jugar_pressed)
@@ -25,8 +25,12 @@ func _ready():
 func _on_jugar_pressed():
 	get_tree().change_scene_to_file("res://scenes/Levels/stage_1.tscn")
 
+
 func _on_cargar_pressed():
-	print("Funcionalidad de cargar partida aún no implementada.")
+	var load_scene = preload("res://scenes/load_menu.tscn").instantiate()
+	add_child(load_scene)
+
+
 
 func _on_opciones_pressed():
 	if not options_instance:

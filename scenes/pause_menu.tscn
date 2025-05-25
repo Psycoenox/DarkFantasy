@@ -21,6 +21,10 @@ offset_bottom = 338.0
 layout_mode = 2
 text = "Reanudar"
 
+[node name="SaveButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Guardar"
+
 [node name="OptionsButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Opciones"

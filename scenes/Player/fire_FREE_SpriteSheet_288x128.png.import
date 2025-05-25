@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfyjh3lvkkin1"
-path="res://.godot/imported/tile002.png-4426e9df462a9cbf0c1457948e01b754.ctex"
+uid="uid://cwddxqvnwsg40"
+path="res://.godot/imported/fire_FREE_SpriteSheet_288x128.png-0f52dea9b3f9f9402e9d8d543a14bb2a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SpriteSheet/Bonfire/tile002.png"
-dest_files=["res://.godot/imported/tile002.png-4426e9df462a9cbf0c1457948e01b754.ctex"]
+source_file="res://scenes/Player/fire_FREE_SpriteSheet_288x128.png"
+dest_files=["res://.godot/imported/fire_FREE_SpriteSheet_288x128.png-0f52dea9b3f9f9402e9d8d543a14bb2a.ctex"]
 
 [params]
 

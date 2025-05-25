@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://nmdxhfuf6e2a"]
+
+[ext_resource type="Script" uid="uid://xkshvyiep0y4" path="res://scenes/save_menu.gd" id="1_acml6"]
+
+[node name="SaveMenu" type="CanvasLayer"]
+script = ExtResource("1_acml6")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Selecciona un slot para guardar"
+
+[node name="Slot1" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Guardar"
+
+[node name="Slot2" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Guardar"
+
+[node name="Slot3" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Guardar"
+
+[node name="CancelButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Salir"
