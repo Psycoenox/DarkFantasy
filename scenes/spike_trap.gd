@@ -9,4 +9,4 @@ func _ready():
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player") and body.has_method("take_damage"):
 		print("🔥 El jugador tocó los pinchos")
-		body.take_damage(999)
+		body.take_damage(9999999999, true)

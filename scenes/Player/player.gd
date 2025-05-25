@@ -320,8 +320,8 @@ func _on_animated_sprite_2d_animation_finished():
 	queued_combo = false
 	combo_step = 0
 
-func take_damage(amount := 1):
-	if is_blocking:
+func take_damage(amount := 1, ignore_block :=false):
+	if is_blocking and not ignore_block:
 		print("🛡️ Bloqueo exitoso. Sin daño.")
 		return
 
