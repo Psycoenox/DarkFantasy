@@ -645,13 +645,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer/BossHealthUI"]
+clip_contents = true
 layout_mode = 0
 offset_left = 353.0
 offset_top = -2.0
 offset_right = 513.0
 offset_bottom = 62.0
 scale = Vector2(2.9359, 2.34032)
-max_value = 400.0
+value = 100.0
 texture_under = ExtResource("10_mgo0f")
 texture_over = ExtResource("11_00exw")
 texture_progress = ExtResource("12_qxfso")

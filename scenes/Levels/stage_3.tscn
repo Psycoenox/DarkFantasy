@@ -913,7 +913,7 @@ scale = Vector2(1.53516, 0.844727)
 texture = ExtResource("3_da0dx")
 
 [node name="Player" parent="." instance=ExtResource("4_a2ih4")]
-position = Vector2(100, 326)
+position = Vector2(4315, 264)
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(-730, -311)
@@ -968,6 +968,7 @@ stream = ExtResource("8_b7plg")
 bus = &"SFX"
 
 [node name="WizardBoss" parent="." instance=ExtResource("8_gqmxp")]
+visible = false
 position = Vector2(3414, 504)
 health = 200
 

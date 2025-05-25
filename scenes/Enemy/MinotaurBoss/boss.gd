@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 @export var speed := 100.0
 @export var gravity := 1200.0
-@export var max_health := 100
+@export var max_health := 600
 @export var armor_hits := 5
 @export var stun_duration := 2.0
 @export var attack_range := 150.0
