@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/68a867a9-0979-43e3-aa6c-02c1e250da60)# 🎮 Dark Fantasy - Videojuego Indie 2D
+# 🎮 Dark Fantasy - Videojuego Indie 2D
 
 **Dark Fantasy** es un videojuego de acción y aventura en 2D con estética pixel-art, ambientado en un mundo medieval oscuro y decadente. Este proyecto ha sido desarrollado como parte de un **Trabajo de Fin de Grado (TFG)** con fines educativos, explorando todas las fases del desarrollo de videojuegos: diseño, programación, arte, interfaz y guardado de partida.
 
