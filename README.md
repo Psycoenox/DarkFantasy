@@ -7,7 +7,7 @@
 ## 🧩 Características del Juego
 
 - ⚔️ Sistema de combate fluido con combos y ataque especial
-- 🧪 Mejoras de personaje (vida, daño, maná)
+- 🧪 Mejoras de personaje (vida, daño)
 - 🗺️ Mapa con exploración y progreso guardado
 - 💾 Sistema de guardado/carga con múltiples slots (JSON)
 - 🕹️ Mecánicas de plataformas y enemigos con IA básica
