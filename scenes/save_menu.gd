@@ -8,6 +8,7 @@ signal cerrar_menu_guardado
 	$Panel/VBoxContainer/Slot3
 ]
 @onready var cancel_btn = $Panel/VBoxContainer/CancelButton
+@onready var confirmacion_label: Label = $Panel/VBoxContainer/Confirmacion  # 🔹 Añadido
 
 func _ready():
 	for i in slot_buttons.size():
@@ -32,29 +33,34 @@ func _ready():
 		else:
 			slot_buttons[i].text = "Slot %d - Vacío" % (i + 1)
 
-		slot_buttons[i].pressed.connect(func(): save_to_slot(i + 1))
+		var slot_index := i
+		slot_buttons[i].pressed.connect(func():
+			print("➡️ Botón slot %d presionado" % (slot_index + 1))
+			save_to_slot(slot_index + 1)
+		)
 
 	cancel_btn.pressed.connect(_on_cancel)
 
-func save_to_slot(slot: int):
+func save_to_slot(slot: int) -> void:
+	print("➡️ Guardando en slot ", slot)
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:
 		print("❌ No se encontró al jugador.")
 		return
-	
+
 	var data := {
-	"stage": get_tree().current_scene.scene_file_path,
-	"player_position": {
-	"x": player.global_position.x,
-	"y": player.global_position.y},
-	"player_health": player.health,
-	"player_max_health": player.max_health,
-	"coins": player.coins  # o como se llame tu propiedad
-}
+		"stage": get_tree().current_scene.scene_file_path,
+		"player_position": {
+			"x": player.global_position.x,
+			"y": player.global_position.y
+		},
+		"player_health": player.health,
+		"player_max_health": player.max_health,
+		"coins": player.coins
+	}
 
-	SaveSystem.save_game(data)
+	print("📦 Datos listos")
 
-	# Adicionalmente guarda también el número del slot (opcional)
 	var path = "user://save_slot_%d.json" % slot
 	var file = FileAccess.open(path, FileAccess.WRITE)
 	if file:
@@ -63,7 +69,16 @@ func save_to_slot(slot: int):
 		print("✅ Guardado en slot %d" % slot)
 	else:
 		print("❌ Error al guardar en slot %d" % slot)
-	queue_free()
+
+	show_confirmation("✅ Guardado con éxito")
+	get_tree().paused = false
+	print("✅ Todo listo después del guardado")
+
+func show_confirmation(text: String) -> void:
+	confirmacion_label.text = text
+	confirmacion_label.visible = true
+	await get_tree().create_timer(2.0).timeout
+	confirmacion_label.visible = false
 
 func _on_cancel():
 	emit_signal("cerrar_menu_guardado")

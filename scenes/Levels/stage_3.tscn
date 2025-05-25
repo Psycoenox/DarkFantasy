@@ -968,7 +968,6 @@ stream = ExtResource("8_b7plg")
 bus = &"SFX"
 
 [node name="WizardBoss" parent="." instance=ExtResource("8_gqmxp")]
-visible = false
 position = Vector2(3414, 504)
 health = 200
 

@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 @onready var status_label: Label = $Panel/VBoxContainer/StatusLabel
+@onready var back_button = $Panel/VBoxContainer/BackButton  
 @onready var load_buttons := [
 	$Panel/VBoxContainer/LoadSlot1,
 	$Panel/VBoxContainer/LoadSlot2,
@@ -8,6 +9,8 @@ extends CanvasLayer
 ]
 
 func _ready():
+	back_button.pressed.connect(_on_back_button_pressed)
+
 	for i in load_buttons.size():
 		var path = "user://save_slot_%d.json" % (i + 1)
 		if FileAccess.file_exists(path):
@@ -46,3 +49,8 @@ func load_game(slot: int):
 				status_label.text = "❌ Error al interpretar el archivo JSON."
 	else:
 		status_label.text = "❌ No se encontró una partida guardada en el slot %d." % slot
+		
+		
+func _on_back_button_pressed():
+	print("llendo al main menu")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

@@ -47,3 +47,6 @@ text = "Guardar"
 [node name="CancelButton" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
 text = "Salir"
+
+[node name="Confirmation" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
